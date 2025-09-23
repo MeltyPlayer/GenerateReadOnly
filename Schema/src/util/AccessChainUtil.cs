@@ -8,7 +8,7 @@ using System.Text;
 
 using schema.binary.attributes;
 using schema.util.data;
-using schema.binary.parser;
+using schema.util.types;
 using schema.util.asserts;
 using schema.util.diagnostics;
 using schema.util.symbols;

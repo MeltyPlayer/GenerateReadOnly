@@ -4,11 +4,12 @@ using System.Linq;
 
 using Microsoft.CodeAnalysis;
 
+using schema.binary;
 using schema.util.asserts;
 using schema.util.symbols;
 
 
-namespace schema.binary.parser;
+namespace schema.util.types;
 
 public enum SchemaTypeKind {
   BOOL,

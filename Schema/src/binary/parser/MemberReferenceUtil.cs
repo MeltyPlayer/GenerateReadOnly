@@ -4,12 +4,13 @@ using System.Numerics;
 
 using Microsoft.CodeAnalysis;
 
+using schema.binary;
 using schema.binary.attributes;
 using schema.util.asserts;
 using schema.util.symbols;
 
 
-namespace schema.binary.parser;
+namespace schema.util.types;
 
 internal static class MemberReferenceUtil {
   public static INamedTypeSymbol BinaryConvertibleTypeSymbol {

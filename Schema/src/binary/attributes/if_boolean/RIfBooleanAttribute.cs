@@ -1,4 +1,5 @@
-﻿using schema.util.diagnostics;
+﻿using schema.util.types;
+using schema.util.diagnostics;
 
 namespace schema.binary.attributes;
 

@@ -7,7 +7,7 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 
 using schema.binary;
-using schema.binary.parser;
+using schema.util.types;
 using schema.util.asserts;
 using schema.util.diagnostics;
 

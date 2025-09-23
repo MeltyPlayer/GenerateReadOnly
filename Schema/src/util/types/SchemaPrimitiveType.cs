@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace schema.binary;
+namespace schema.util.types;
 
 public enum SchemaPrimitiveType {
   UNDEFINED,

@@ -1,4 +1,6 @@
-﻿namespace schema.binary.attributes;
+﻿using schema.util.types;
+
+namespace schema.binary.attributes;
 
 public interface IStringLengthSourceAttribute {
   StringLengthSourceType Method { get; }

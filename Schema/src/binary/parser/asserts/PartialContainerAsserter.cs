@@ -1,11 +1,12 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using schema.binary;
 using schema.util.diagnostics;
 using schema.util.syntax;
 
 
-namespace schema.binary.parser.asserts;
+namespace schema.util.types.asserts;
 
 internal class PartialContainerAsserter {
   private readonly IDiagnosticReporter diagnosticReporter_;

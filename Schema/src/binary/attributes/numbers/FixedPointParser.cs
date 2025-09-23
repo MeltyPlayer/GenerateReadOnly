@@ -1,4 +1,4 @@
-﻿using schema.binary.parser;
+﻿using schema.util.types;
 using schema.util.symbols;
 
 

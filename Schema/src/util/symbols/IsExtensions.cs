@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 
 using schema.binary;
+using schema.util.types;
 using schema.util.sequences;
 
 

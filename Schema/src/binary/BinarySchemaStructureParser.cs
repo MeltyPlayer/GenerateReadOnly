@@ -4,8 +4,8 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 
 using schema.binary.attributes;
-using schema.binary.parser;
-using schema.binary.parser.asserts;
+using schema.util.types.asserts;
+using schema.util.types;
 using schema.util.symbols;
 
 

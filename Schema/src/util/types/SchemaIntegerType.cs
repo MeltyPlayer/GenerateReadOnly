@@ -1,7 +1,6 @@
 ﻿using System;
 
-
-namespace schema.binary;
+namespace schema.util.types;
 
 public enum SchemaIntegerType {
   UNDEFINED,

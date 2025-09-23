@@ -1,5 +1,7 @@
 ﻿using System;
 
+using schema.util.types;
+
 
 namespace schema.binary.attributes;
 

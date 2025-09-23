@@ -1,5 +1,5 @@
-﻿using schema.binary.parser;
-using schema.util.symbols;
+﻿using schema.util.symbols;
+using schema.util.types;
 
 
 namespace schema.binary.attributes;

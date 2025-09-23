@@ -1,9 +1,10 @@
 ﻿using Microsoft.CodeAnalysis;
 
+using schema.binary;
 using schema.util.diagnostics;
 
 
-namespace schema.binary.parser.asserts;
+namespace schema.util.types.asserts;
 
 internal class SupportedElementTypeAsserter {
   public void AssertElementTypesAreSupported(

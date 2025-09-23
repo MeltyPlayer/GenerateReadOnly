@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using readOnly.generator.rules;
+using readOnly.analyzer;
 
 namespace readOnly.util.generators;
 

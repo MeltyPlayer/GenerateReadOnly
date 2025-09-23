@@ -27,15 +27,16 @@ public class ReadOnlyTypeGenerator
                                   SemanticModel semanticModel,
                                   TypeDeclarationSyntax syntax) {
     yield return ($"{symbol.GetUniqueNameForGenerator()}_readOnly.g",
-                  this.GenerateSourceForNamedType(
+                  GenerateSourceForNamedType(
                       symbol,
                       semanticModel,
                       syntax));
   }
 
-  public string GenerateSourceForNamedType(INamedTypeSymbol typeSymbol,
-                                           SemanticModel semanticModel,
-                                           TypeDeclarationSyntax syntax) {
+  public static string GenerateSourceForNamedType(
+      INamedTypeSymbol typeSymbol,
+      SemanticModel semanticModel,
+      TypeDeclarationSyntax syntax) {
     var sb = new StringBuilder();
     using var sw = new SourceWriter(new StringWriter(sb));
 

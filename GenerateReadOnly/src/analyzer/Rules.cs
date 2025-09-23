@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace readOnly.generator.rules;
+namespace readOnly.analyzer;
 
 public static partial class Rules {
   private static int diagnosticId_ = 0;
@@ -20,7 +20,7 @@ public static partial class Rules {
     => new(Rules.GetNextDiagnosticId_(),
            title,
            messageFormat,
-           "BinarySchemaAnalyzer",
+           "GenerateReadOnlyAnalyzer",
            DiagnosticSeverity.Error,
            true);
 
@@ -30,7 +30,7 @@ public static partial class Rules {
         "GenerateReadOnly type must be partial",
         $"Type '{{0}}' was annotated with {nameof(GenerateReadOnlyAttribute)}, so it must be partial to accept automatically generated read/write code.");
 
-  public static DiagnosticDescriptor ContainerTypeMustBePartial {
+  public static DiagnosticDescriptor ParentTypeMustBePartial {
     get;
   } = Rules.CreateDiagnosticDescriptor_(
       "Container of GenerateReadOnly type must be partial",
@@ -39,12 +39,7 @@ public static partial class Rules {
   public static DiagnosticDescriptor Exception { get; }
     = Rules.CreateDiagnosticDescriptor_(
         "Exception",
-        "Ran into an exception while generating source ({0}),{1}");
-
-  public static DiagnosticDescriptor SymbolException { get; }
-    = Rules.CreateDiagnosticDescriptor_(
-        "Exception",
-        "Ran into an exception while parsing ({0}),{1}");
+        "Ran into an exception while processing symbol '{0}',{1}");
 
 
   public static Diagnostic CreateDiagnostic(
@@ -66,19 +61,10 @@ public static partial class Rules {
       ISymbol symbol,
       Exception exception)
     => Diagnostic.Create(
-        Rules.SymbolException,
+        Rules.Exception,
         symbol.Locations.First(),
         exception.Message,
         exception.StackTrace.Replace("\r\n", "").Replace("\n", ""));
-
-  public static Diagnostic CreateExceptionDiagnostic(
-      Exception exception)
-    => Diagnostic.Create(
-        Rules.Exception,
-        null,
-        exception.Message,
-        exception.StackTrace.Replace("\r\n", "").Replace("\n", ""));
-
 
   public static void ReportExceptionDiagnostic(
       SyntaxNodeAnalysisContext? context,

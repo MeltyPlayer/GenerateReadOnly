@@ -5,8 +5,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-using readOnly.generator.rules;
-
+using readOnly.analyzer;
 
 namespace readOnly.util.diagnostics;
 
@@ -58,7 +57,7 @@ internal class DiagnosticReporter : IDiagnosticReporter {
 
   public void ReportException(Exception exception)
     => this.ReportDiagnosticImpl_(
-        Diagnostic.Create(Rules.SymbolException,
+        Diagnostic.Create(Rules.Exception,
                           this.symbol_.Locations.First(),
                           exception.Message,
                           exception.StackTrace.Replace("\r\n", "")

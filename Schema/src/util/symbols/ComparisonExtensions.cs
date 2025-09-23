@@ -10,12 +10,6 @@ using schema.util.enumerables;
 namespace schema.util.symbols;
 
 public static class ComparisonExtensions {
-  public static bool IsSameAs(this ISymbol symbol, ISymbol other)
-    => symbol.Name == other.Name &&
-       symbol.GetFullyQualifiedNamespace() ==
-       other.GetFullyQualifiedNamespace() &&
-       symbol.GetArity() == other.GetArity();
-
   public static bool IsType<T>(this ISymbol symbol)
     => symbol.IsInSameNamespaceAs<T>() &&
        symbol.Name == typeof(T).Name &&
@@ -36,16 +30,6 @@ public static class ComparisonExtensions {
            symbol.IsInSameNamespaceAs(expectedType) &&
            symbol.GetArity() == expectedArity;
   }
-
-  public static bool Implements<T>(this ISymbol symbol)
-    => symbol.Implements<T>(out _);
-
-  public static bool Implements<T>(this ISymbol symbol,
-                                   out INamedTypeSymbol matchingType)
-    => symbol.Implements(typeof(T), out matchingType);
-
-  public static bool Implements(this ISymbol symbol, Type type)
-    => symbol.Implements(type, out _);
 
   public static bool Implements(this ISymbol symbol,
                                 Type type,

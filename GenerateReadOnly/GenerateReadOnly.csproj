@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageProjectUrl>https://github.com/MeltyPlayer/Schema</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/MeltyPlayer/GenerateReadOnly</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>Roslyn generator that automatically implements ReadOnly interfaces for annotated types.</Description>
     <PackageId>GenerateReadOnly</PackageId>

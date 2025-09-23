@@ -166,7 +166,7 @@ public partial interface IReadOnlyBar {
 
 ### Inheritance
 
-If a type with a read only interface inherits from another class with a read only interface, the read only interface will also automatically set up the same inheritance:
+If a type with a read only interface inherits from another class with a read only interface, the read only interfaces will also have the same inheritance:
 
 **User code:**
 ```cs

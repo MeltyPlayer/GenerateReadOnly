@@ -74,7 +74,7 @@ public partial interface IReadOnlyFoo {
 
 *Note: This generator does not verify that const methods are pure.*
 
-### Interplay with other readonly types
+### Deep readonly
 
 If your type refers to another type with its own IReadOnly interface, it will automatically use that instead in the generated type:
 
@@ -110,7 +110,9 @@ using readOnly;
 
 [GenerateReadOnly]
 public partial class Node {
-  public Node Child { get; set; }
+  public Node Parent { get; set; }
+
+  public List<Node> Children { get; set; }
 }
 ```
 

@@ -114,16 +114,4 @@ public static class SchemaPrimitiveTypeExtensions {
         SchemaPrimitiveType.UNDEFINED => false,
         _                             => throw new NotImplementedException(),
     };
-
-  public static SchemaPrimitiveType GetUnderlyingPrimitiveType(
-      this SchemaPrimitiveType type)
-    => type switch {
-        SchemaPrimitiveType.INT24  => SchemaPrimitiveType.INT32,
-        SchemaPrimitiveType.UINT24 => SchemaPrimitiveType.UINT32,
-        SchemaPrimitiveType.SN8    => SchemaPrimitiveType.SINGLE,
-        SchemaPrimitiveType.UN8    => SchemaPrimitiveType.SINGLE,
-        SchemaPrimitiveType.UN16   => SchemaPrimitiveType.SINGLE,
-        SchemaPrimitiveType.SN16   => SchemaPrimitiveType.SINGLE,
-        _                          => type
-    };
 }

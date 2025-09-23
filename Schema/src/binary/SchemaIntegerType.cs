@@ -34,38 +34,4 @@ public static class SchemaIntegerTypeExtensions {
         SchemaIntegerType.UNDEFINED => SchemaNumberType.UNDEFINED,
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
     };
-
-  public static SchemaPrimitiveType AsPrimitiveType(
-      this SchemaIntegerType type)
-    => type.AsNumberType().AsPrimitiveType();
-
-  public static bool CanAcceptAnInt32(this SchemaIntegerType type)
-    => type switch {
-        SchemaIntegerType.BYTE   => false,
-        SchemaIntegerType.SBYTE  => false,
-        SchemaIntegerType.INT16  => false,
-        SchemaIntegerType.UINT16 => false,
-        SchemaIntegerType.INT24  => true,
-        SchemaIntegerType.UINT24 => false,
-        SchemaIntegerType.INT32  => true,
-        SchemaIntegerType.UINT32 => false,
-        SchemaIntegerType.INT64  => true,
-        SchemaIntegerType.UINT64 => false,
-        _                        => false,
-    };
-
-  public static bool CanBeStoredInAnInt32(this SchemaIntegerType type)
-    => type switch {
-        SchemaIntegerType.BYTE   => true,
-        SchemaIntegerType.SBYTE  => true,
-        SchemaIntegerType.INT16  => true,
-        SchemaIntegerType.UINT16 => true,
-        SchemaIntegerType.INT24  => true,
-        SchemaIntegerType.UINT24 => false,
-        SchemaIntegerType.INT32  => true,
-        SchemaIntegerType.UINT32 => false,
-        SchemaIntegerType.INT64  => false,
-        SchemaIntegerType.UINT64 => false,
-        _                        => false,
-    };
 }

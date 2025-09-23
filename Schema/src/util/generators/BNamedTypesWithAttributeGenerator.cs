@@ -5,8 +5,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using schema.binary;
-using schema.util.types;
-
 
 namespace schema.util.generators;
 
@@ -47,12 +45,6 @@ public abstract class BNamedTypesWithAttributeGenerator<TAttribute>
         syntaxAndSymbol
             => this.FilterNamedTypesBeforeGenerating(syntaxAndSymbol.syntax,
               syntaxAndSymbol.symbol));
-
-    context.RegisterImplementationSourceOutput(
-        context.CompilationProvider,
-        (_, compilation) => {
-          MemberReferenceUtil.PopulateBinaryTypes(compilation);
-        });
 
     context.RegisterSourceOutput(
         filteredSyntaxAndSymbolProvider.Combine(context.CompilationProvider),

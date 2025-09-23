@@ -4,9 +4,7 @@ using System.Linq;
 
 using Microsoft.CodeAnalysis;
 
-using schema.binary;
 using schema.util.types;
-using schema.util.sequences;
 
 
 namespace schema.util.symbols;
@@ -141,26 +139,6 @@ public static class IsExtensions {
                           out var immutableArrayTypeV2)) {
       elementType = immutableArrayTypeV2.TypeArguments.ToArray()[0];
       sequenceType = SequenceType.IMMUTABLE_ARRAY;
-      return true;
-    }
-
-    if (symbol.Implements(typeof(ISequence<,>), out var sequenceTypeV2)) {
-      elementType = sequenceTypeV2.TypeArguments.ToArray()[1];
-      sequenceType = SequenceType.MUTABLE_SEQUENCE;
-      return true;
-    }
-
-    if (symbol.Implements(typeof(IConstLengthSequence<,>),
-                          out var constLengthSequenceTypeV2)) {
-      elementType = constLengthSequenceTypeV2.TypeArguments.ToArray()[1];
-      sequenceType = SequenceType.MUTABLE_SEQUENCE;
-      return true;
-    }
-
-    if (symbol.Implements(typeof(IReadOnlySequence<,>),
-                          out var readOnlySequence)) {
-      elementType = readOnlySequence.TypeArguments.ToArray()[1];
-      sequenceType = SequenceType.READ_ONLY_SEQUENCE;
       return true;
     }
 

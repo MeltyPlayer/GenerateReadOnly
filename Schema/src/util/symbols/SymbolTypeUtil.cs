@@ -15,22 +15,6 @@ using schema.util.diagnostics;
 namespace schema.util.symbols;
 
 public static class SymbolTypeUtil {
-  public static Type LookUpType(this INamedTypeSymbol symbol) {
-    var name = $"{symbol.GetFullyQualifiedNamespace()}.{symbol.Name}";
-
-    var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                              .AsEnumerable()
-                              .Reverse();
-    foreach (var assembly in assemblies) {
-      var tt = assembly.GetType(name);
-      if (tt != null) {
-        return tt;
-      }
-    }
-
-    throw new Exception($"Failed to find type: {name}");
-  }
-
   public static INamedTypeSymbol[] GetDeclaringTypesDownward(
       this ISymbol type) {
     var declaringTypes = new List<INamedTypeSymbol>();
@@ -305,43 +289,6 @@ public static class SymbolTypeUtil {
                                  getNamespaceParts);
 
     return sb.ToString();
-  }
-
-
-  [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static void GetMemberInContainer(
-      this ITypeSymbol containerSymbol,
-      string memberName,
-      out ISymbol memberSymbol,
-      out ITypeSymbol memberTypeSymbol,
-      out ITypeInfo memberTypeInfo
-  ) {
-    memberSymbol = containerSymbol.GetMembers(memberName).Single();
-    new TypeInfoParser().ParseMember(memberSymbol,
-                                     out memberTypeSymbol,
-                                     out memberTypeInfo);
-  }
-
-  internal static void GetMemberRelativeToAnother(
-      IDiagnosticReporter? diagnosticReporter,
-      INamedTypeSymbol containerTypeSymbol,
-      string otherMemberName,
-      string thisMemberNameForFirstPass,
-      bool assertOrder,
-      out ISymbol memberSymbol,
-      out ITypeSymbol memberTypeSymbol,
-      out ITypeInfo memberTypeInfo) {
-    var typeChain = AccessChainUtil.GetAccessChainForRelativeMember(
-        diagnosticReporter,
-        containerTypeSymbol,
-        otherMemberName,
-        thisMemberNameForFirstPass,
-        assertOrder);
-
-    var target = typeChain.Target;
-    memberSymbol = target.MemberSymbol;
-    memberTypeSymbol = target.MemberTypeSymbol;
-    memberTypeInfo = target.MemberTypeInfo;
   }
 
   public static string EscapeKeyword(this string text)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using schema.generator.rules;
 using schema.util.diagnostics;
 using schema.util.syntax;
 

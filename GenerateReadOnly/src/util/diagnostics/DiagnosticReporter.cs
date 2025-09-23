@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
+using schema.generator.rules;
+
 
 namespace schema.util.diagnostics;
 

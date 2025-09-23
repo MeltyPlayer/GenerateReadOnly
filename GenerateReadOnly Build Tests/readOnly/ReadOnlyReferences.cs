@@ -1,5 +1,7 @@
 ﻿using readOnly;
 
+using schema.generator;
+
 
 namespace foo.bar;
 

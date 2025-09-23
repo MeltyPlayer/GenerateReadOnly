@@ -1,4 +1,6 @@
-﻿namespace readOnly;
+﻿using schema.generator;
+
+namespace readOnly;
 
 [GenerateReadOnly]
 public partial interface ReadOnlyMethodParameter {

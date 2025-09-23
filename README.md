@@ -14,7 +14,7 @@ Roslyn generator that automatically sets up ReadOnly interfaces for annotated ty
 
 I found myself really wanting to have IReadOnly versions of my types for type-safety, similar to what C# provides with IReadOnlyList, IReadOnlyDictionary, ReadOnlySpan, etc., and similar to what is possible in C++ with const. I started setting up these types manually, but this quickly grew out of hand and was hard to manage.
 
-This library aims to provide this functionality without too much extra boilerplate.
+So instead, I opted to solve this via a source generator, which keeps things much simpler.
 
 ## Usage
 

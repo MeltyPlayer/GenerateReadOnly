@@ -112,7 +112,7 @@ using readOnly;
 public partial class Node {
   public Node Parent { get; set; }
 
-  public List<Node> Children { get; set; }
+  public List<Node> Children { get; }
 }
 ```
 
@@ -120,6 +120,8 @@ public partial class Node {
 ```cs
 public partial interface IReadOnlyNode {
   IReadOnlyNode Child { get; }
+
+  IReadOnlyList<IReadOnlyNode> Children { get; }
 }
 ```
 

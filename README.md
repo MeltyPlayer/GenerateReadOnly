@@ -16,6 +16,7 @@ Roslyn generator that automatically implements ReadOnly interfaces for annotated
 
 To use this generator, simply annotate a type with `readOnly.GenerateReadOnlyAttribute` and mark the type as partial, like so:
 
+**User code:**
 ```cs
 using readOnly;
 
@@ -31,6 +32,8 @@ public partial class Foo {
 ```
 
 This will generate a read only version of the type that your type will implement automatically. This new type exposes only getters for each property by default:
+
+**Generated code:**
 ```cs
 public partial interface IReadOnlyFoo {
   int A { get; }
@@ -41,6 +44,7 @@ public partial interface IReadOnlyFoo {
 
 If you have certain methods that don't change state, you can mark them as const similar to C++ by annotating them with `readOnly.ConstAttribute`:
 
+**User code:**
 ```cs
 using readOnly;
 
@@ -54,8 +58,102 @@ public partial class Foo {
 ```
 
 Now, the generated read only interface will also include this const method:
+
+**Generated code:**
 ```cs
 public partial interface IReadOnlyFoo {
   int B(int c);
+}
+```
+
+*Note: This generator does not verify that const methods are pure.*
+
+### Interplay with other readonly types
+
+If your type refers to another type with its own IReadOnly interface, it will automatically use that instead in the generated type:
+
+**User code:**
+```cs
+using readOnly;
+
+[GenerateReadOnly]
+public partial class Foo;
+
+[GenerateReadOnly]
+public partial class Bar {
+  public Foo Value { get; set; }
+}
+```
+
+**Generated code:**
+```cs
+public partial interface IReadOnlyFoo;
+
+public partial interface IReadOnlyBar {
+  public IReadOnlyFoo Value { get; }
+}
+```
+
+*This works internally by generating overrides for these read only parent properties/methods that cast the mutable version to the read only version.*
+
+This also supports recursion:
+
+**User code:**
+```cs
+using readOnly;
+
+[GenerateReadOnly]
+public partial class Node {
+  public Node Child { get; set; }
+}
+```
+
+**Generated code:**
+```cs
+public partial interface IReadOnlyNode {
+  public IReadOnlyNode Child { get; }
+}
+```
+
+### Forcing mutability
+
+If you don't want a type to be swapped out for its IReadOnly counterpart, you can force it to be kept by annotating the type with `readOnly.KeepMutableTypeAttribute`:
+
+**User code:**
+```cs
+using readOnly;
+
+[GenerateReadOnly]
+public partial class Foo;
+
+[GenerateReadOnly]
+public partial class Bar {
+  [Const]
+  [KeepMutableType]
+  public Foo Value { get; set; }
+
+  [Const]
+  [KeepMutableType]
+  public Foo KeepInReturn() {
+    ...
+  }
+
+  [Const]
+  public void KeepInParam([KeepMutableType] Foo value) {
+    ...
+  }
+}
+```
+
+**Generated code:**
+```cs
+public partial interface IReadOnlyFoo;
+
+public partial interface IReadOnlyBar {
+  Foo Value { get; }
+
+  Foo KeepInReturn();
+
+  void KeepInParam(Foo value);
 }
 ```

@@ -339,7 +339,7 @@ public class ReadOnlyTypeGenerator
             sw.Write(" = ");
 
             var explicitDefaultValue = parameterSymbol.ExplicitDefaultValue;
-            if (defaultValueType.IsEnum(out _) &&
+            if (defaultValueType.IsEnum() &&
                 explicitDefaultValue != null) {
               sw.Write(
                   $"({typeSymbol.GetQualifiedNameFromCurrentSymbol(defaultValueType)}) {explicitDefaultValue}");

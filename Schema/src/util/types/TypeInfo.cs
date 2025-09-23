@@ -22,46 +22,27 @@ public enum SchemaTypeKind {
   SEQUENCE,
 }
 
-public interface ITypeInfo {
-  ITypeSymbol TypeSymbol { get; }
-  SchemaTypeKind Kind { get; }
-  bool IsReadOnly { get; }
-  bool IsNullable { get; }
-}
+public interface ITypeInfo;
 
-public interface IPrimitiveTypeInfo : ITypeInfo {
-  SchemaPrimitiveType PrimitiveType { get; }
-}
+public interface IPrimitiveTypeInfo : ITypeInfo;
 
-public interface IBoolTypeInfo : IPrimitiveTypeInfo { }
+public interface IBoolTypeInfo : IPrimitiveTypeInfo;
 
-public interface INumberTypeInfo : IPrimitiveTypeInfo {
-  SchemaNumberType NumberType { get; }
-}
+public interface INumberTypeInfo : IPrimitiveTypeInfo;
 
-public interface IIntegerTypeInfo : INumberTypeInfo {
-  SchemaIntegerType IntegerType { get; }
-}
+public interface IIntegerTypeInfo : INumberTypeInfo;
 
-public interface IEnumTypeInfo : IPrimitiveTypeInfo { }
+public interface IEnumTypeInfo : IPrimitiveTypeInfo;
 
-public interface ICharTypeInfo : IPrimitiveTypeInfo { }
+public interface ICharTypeInfo : IPrimitiveTypeInfo;
 
-public interface IStringTypeInfo : ITypeInfo { }
+public interface IStringTypeInfo : ITypeInfo;
 
-public interface IContainerTypeInfo : ITypeInfo { }
+public interface IContainerTypeInfo : ITypeInfo;
 
-public interface IGenericTypeInfo : ITypeInfo {
-  ITypeInfo[] ConstraintTypeInfos { get; }
-}
+public interface IGenericTypeInfo : ITypeInfo;
 
-public interface ISequenceTypeInfo : ITypeInfo {
-  SequenceType SequenceType { get; }
-  bool IsLengthConst { get; }
-  ITypeInfo ElementTypeInfo { get; }
-
-  string LengthName { get; }
-}
+public interface ISequenceTypeInfo : ITypeInfo;
 
 public class TypeInfoParser {
   public enum ParseStatus {
@@ -122,10 +103,7 @@ public class TypeInfoParser {
     if (typeSymbol.IsPrimitive(out var primitiveType)) {
       switch (primitiveType) {
         case SchemaPrimitiveType.BOOLEAN: {
-          typeInfo = new BoolTypeInfo(
-              typeSymbol,
-              isReadonly,
-              isNullable);
+          typeInfo = new BoolTypeInfo();
           return ParseStatus.SUCCESS;
         }
         case SchemaPrimitiveType.BYTE:
@@ -136,12 +114,7 @@ public class TypeInfoParser {
         case SchemaPrimitiveType.UINT32:
         case SchemaPrimitiveType.INT64:
         case SchemaPrimitiveType.UINT64: {
-          typeInfo = new IntegerTypeInfo(
-              typeSymbol,
-              SchemaTypeKind.INTEGER,
-              primitiveType.AsIntegerType(),
-              isReadonly,
-              isNullable);
+          typeInfo = new IntegerTypeInfo();
           return ParseStatus.SUCCESS;
         }
         case SchemaPrimitiveType.SN8:
@@ -150,26 +123,15 @@ public class TypeInfoParser {
         case SchemaPrimitiveType.UN16:
         case SchemaPrimitiveType.SINGLE:
         case SchemaPrimitiveType.DOUBLE: {
-          typeInfo = new FloatTypeInfo(
-              typeSymbol,
-              SchemaTypeKind.FLOAT,
-              primitiveType.AsNumberType(),
-              isReadonly,
-              isNullable);
+          typeInfo = new FloatTypeInfo();
           return ParseStatus.SUCCESS;
         }
         case SchemaPrimitiveType.CHAR: {
-          typeInfo = new CharTypeInfo(
-              typeSymbol,
-              isReadonly,
-              isNullable);
+          typeInfo = new CharTypeInfo();
           return ParseStatus.SUCCESS;
         }
         case SchemaPrimitiveType.ENUM: {
-          typeInfo = new EnumTypeInfo(
-              typeSymbol,
-              isReadonly,
-              isNullable);
+          typeInfo = new EnumTypeInfo();
           return ParseStatus.SUCCESS;
         }
         default: throw new ArgumentOutOfRangeException();
@@ -177,10 +139,7 @@ public class TypeInfoParser {
     }
 
     if (typeSymbol.IsString()) {
-      typeInfo = new StringTypeInfo(
-          typeSymbol,
-          isReadonly,
-          isNullable);
+      typeInfo = new StringTypeInfo();
       return ParseStatus.SUCCESS;
     }
 
@@ -194,13 +153,7 @@ public class TypeInfoParser {
         return elementParseStatus;
       }
 
-      typeInfo = new SequenceTypeInfo(
-          typeSymbol,
-          isReadonly,
-          isNullable,
-          sequenceType,
-          isReadonly && sequenceType.IsConstLength(),
-          elementTypeInfo);
+      typeInfo = new SequenceTypeInfo();
       return ParseStatus.SUCCESS;
     }
 
@@ -208,10 +161,7 @@ public class TypeInfoParser {
         typeSymbol.IsInterface() ||
         typeSymbol.IsStruct() ||
         typeSymbol is IErrorTypeSymbol) {
-      typeInfo = new ContainerTypeInfo(
-          typeSymbol,
-          isReadonly,
-          isNullable);
+      typeInfo = new ContainerTypeInfo();
       return ParseStatus.SUCCESS;
     }
 
@@ -230,11 +180,7 @@ public class TypeInfoParser {
                       })
               .ToArray();
 
-      typeInfo = new GenericTypeInfo(
-          constraintTypeInfos,
-          typeSymbol,
-          isReadonly,
-          isNullable);
+      typeInfo = new GenericTypeInfo();
       return ParseStatus.SUCCESS;
     }
 
@@ -287,146 +233,13 @@ public class TypeInfoParser {
     }
   }
 
-  private record BoolTypeInfo(
-      ITypeSymbol TypeSymbol,
-      bool IsReadOnly,
-      bool IsNullable) : IBoolTypeInfo {
-    public ITypeSymbol TypeSymbol { get; } = TypeSymbol;
-
-    public SchemaPrimitiveType PrimitiveType => SchemaPrimitiveType.BOOLEAN;
-    public SchemaTypeKind Kind => SchemaTypeKind.BOOL;
-
-    public bool IsReadOnly { get; } = IsReadOnly;
-    public bool IsNullable { get; } = IsNullable;
-  }
-
-
-  private class FloatTypeInfo(
-      ITypeSymbol typeSymbol,
-      SchemaTypeKind kind,
-      SchemaNumberType numberType,
-      bool isReadonly,
-      bool isNullable)
-      : INumberTypeInfo {
-    public ITypeSymbol TypeSymbol { get; } = typeSymbol;
-    public SchemaTypeKind Kind { get; } = kind;
-    public SchemaNumberType NumberType { get; } = numberType;
-
-    public SchemaPrimitiveType PrimitiveType
-      => this.NumberType.AsPrimitiveType();
-
-    public bool IsReadOnly { get; } = isReadonly;
-    public bool IsNullable { get; } = isNullable;
-  }
-
-  private record IntegerTypeInfo(
-      ITypeSymbol TypeSymbol,
-      SchemaTypeKind Kind,
-      SchemaIntegerType IntegerType,
-      bool IsReadOnly,
-      bool IsNullable) : IIntegerTypeInfo {
-    public ITypeSymbol TypeSymbol { get; } = TypeSymbol;
-    public SchemaTypeKind Kind { get; } = Kind;
-    public SchemaIntegerType IntegerType { get; } = IntegerType;
-
-    public SchemaNumberType NumberType => this.IntegerType.AsNumberType();
-
-    public SchemaPrimitiveType PrimitiveType
-      => this.NumberType.AsPrimitiveType();
-
-    public bool IsReadOnly { get; } = IsReadOnly;
-    public bool IsNullable { get; } = IsNullable;
-  }
-
-  private record CharTypeInfo(
-      ITypeSymbol TypeSymbol,
-      bool IsReadOnly,
-      bool IsNullable) : ICharTypeInfo {
-    public SchemaPrimitiveType PrimitiveType => SchemaPrimitiveType.CHAR;
-    public SchemaTypeKind Kind => SchemaTypeKind.CHAR;
-
-    public ITypeSymbol TypeSymbol { get; } = TypeSymbol;
-
-    public bool IsReadOnly { get; } = IsReadOnly;
-    public bool IsNullable { get; } = IsNullable;
-  }
-
-  private record StringTypeInfo(
-      ITypeSymbol TypeSymbol,
-      bool IsReadOnly,
-      bool IsNullable) : IStringTypeInfo {
-    public SchemaTypeKind Kind => SchemaTypeKind.STRING;
-
-    public ITypeSymbol TypeSymbol { get; } = TypeSymbol;
-
-    public bool IsReadOnly { get; } = IsReadOnly;
-    public bool IsNullable { get; } = IsNullable;
-  }
-
-  private class EnumTypeInfo(
-      ITypeSymbol typeSymbol,
-      bool isReadonly,
-      bool isNullable)
-      : IEnumTypeInfo {
-    public SchemaPrimitiveType PrimitiveType => SchemaPrimitiveType.ENUM;
-    public SchemaTypeKind Kind => SchemaTypeKind.ENUM;
-
-    public ITypeSymbol TypeSymbol { get; } = typeSymbol;
-
-    public bool IsReadOnly { get; } = isReadonly;
-    public bool IsNullable { get; } = isNullable;
-  }
-
-  private class ContainerTypeInfo(
-      ITypeSymbol typeSymbol,
-      bool isReadonly,
-      bool isNullable)
-      : IContainerTypeInfo {
-    public SchemaTypeKind Kind => SchemaTypeKind.CONTAINER;
-
-    public ITypeSymbol TypeSymbol { get; } = typeSymbol;
-
-    public bool IsReadOnly { get; } = isReadonly;
-    public bool IsNullable { get; } = isNullable;
-  }
-
-  private class GenericTypeInfo(
-      ITypeInfo[] constraintTypeInfos,
-      ITypeSymbol typeSymbol,
-      bool isReadonly,
-      bool isNullable)
-      : IGenericTypeInfo {
-    public SchemaTypeKind Kind => SchemaTypeKind.GENERIC;
-
-    public ITypeInfo[] ConstraintTypeInfos { get; } = constraintTypeInfos;
-    public ITypeSymbol TypeSymbol { get; } = typeSymbol;
-
-    public bool IsReadOnly { get; } = isReadonly;
-    public bool IsNullable { get; } = isNullable;
-  }
-
-  private class SequenceTypeInfo(
-      ITypeSymbol typeSymbol,
-      bool isReadonly,
-      bool isNullable,
-      SequenceType sequenceType,
-      bool isLengthConst,
-      ITypeInfo containedType) : ISequenceTypeInfo {
-    public SchemaTypeKind Kind => SchemaTypeKind.SEQUENCE;
-
-    public ITypeSymbol TypeSymbol { get; } = typeSymbol;
-
-    public bool IsReadOnly { get; } = isReadonly;
-    public bool IsNullable { get; } = isNullable;
-
-    public SequenceType SequenceType { get; } = sequenceType;
-    public bool IsLengthConst { get; } = isLengthConst;
-    public ITypeInfo ElementTypeInfo { get; } = containedType;
-
-    public string LengthName
-      => this.SequenceType is SequenceType.MUTABLE_ARRAY
-                              or SequenceType.IMMUTABLE_ARRAY
-          ? "Length"
-          : "Count";
-  }
+  private record BoolTypeInfo : IBoolTypeInfo;
+  private class FloatTypeInfo : INumberTypeInfo;
+  private record IntegerTypeInfo : IIntegerTypeInfo;
+  private record CharTypeInfo : ICharTypeInfo;
+  private record StringTypeInfo : IStringTypeInfo;
+  private class EnumTypeInfo : IEnumTypeInfo;
+  private class ContainerTypeInfo : IContainerTypeInfo;
+  private class GenericTypeInfo : IGenericTypeInfo;
+  private class SequenceTypeInfo : ISequenceTypeInfo;
 }

@@ -159,7 +159,7 @@ public static class SymbolTypeUtil {
     }
 
     if (referencedSymbol.IsPrimitive(out var primitiveType) &&
-        !referencedSymbol.IsEnum(out _)) {
+        !referencedSymbol.IsEnum()) {
       // TODO: Is there a built-in for this?
       return primitiveType switch {
           SchemaPrimitiveType.BOOLEAN => "bool",

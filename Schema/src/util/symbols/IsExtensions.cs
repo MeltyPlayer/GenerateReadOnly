@@ -10,18 +10,14 @@ using schema.util.types;
 namespace schema.util.symbols;
 
 public static class IsExtensions {
-  public static bool IsEnum(this ISymbol symbol,
-                            out SchemaIntegerType underlyingType) {
+  public static bool IsEnum(this ISymbol symbol) {
     var underlyingSymbol = (symbol as INamedTypeSymbol)?.EnumUnderlyingType;
     if (underlyingSymbol == null) {
-      underlyingType = default;
       return false;
     }
 
-    var returnStatus = underlyingSymbol.IsPrimitive(out var primitiveType) &&
-                       primitiveType != SchemaPrimitiveType.UNDEFINED;
-    underlyingType = primitiveType.AsIntegerType();
-    return returnStatus;
+    return underlyingSymbol.IsPrimitive(out var primitiveType) &&
+           primitiveType != SchemaPrimitiveType.UNDEFINED;
   }
 
   public static bool IsPrimitive(this ISymbol symbol,

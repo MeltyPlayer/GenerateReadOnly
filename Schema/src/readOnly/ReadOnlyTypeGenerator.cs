@@ -66,7 +66,7 @@ public class ReadOnlyTypeGenerator
               = parser_
                 .ParseMembers(typeSymbol)
                 .Where(parsedMember => {
-                         var (parseStatus, memberSymbol, _, _) = parsedMember;
+                         var (parseStatus, memberSymbol) = parsedMember;
                          if (parseStatus ==
                              TypeInfoParser.ParseStatus
                                            .NOT_A_FIELD_OR_PROPERTY_OR_METHOD) {
@@ -175,8 +175,7 @@ public class ReadOnlyTypeGenerator
 
     foreach (var parsedMember in parser_.ParseMembers(
                  typeSymbol)) {
-      var (parseStatus, memberSymbol, _, _)
-          = parsedMember;
+      var (parseStatus, memberSymbol) = parsedMember;
       if (parseStatus ==
           TypeInfoParser.ParseStatus.NOT_A_FIELD_OR_PROPERTY_OR_METHOD) {
         continue;

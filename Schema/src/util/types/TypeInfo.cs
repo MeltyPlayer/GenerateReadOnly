@@ -10,40 +10,6 @@ using schema.util.symbols;
 
 namespace schema.util.types;
 
-public enum SchemaTypeKind {
-  BOOL,
-  INTEGER,
-  FLOAT,
-  CHAR,
-  STRING,
-  ENUM,
-  CONTAINER,
-  GENERIC,
-  SEQUENCE,
-}
-
-public interface ITypeInfo;
-
-public interface IPrimitiveTypeInfo : ITypeInfo;
-
-public interface IBoolTypeInfo : IPrimitiveTypeInfo;
-
-public interface INumberTypeInfo : IPrimitiveTypeInfo;
-
-public interface IIntegerTypeInfo : INumberTypeInfo;
-
-public interface IEnumTypeInfo : IPrimitiveTypeInfo;
-
-public interface ICharTypeInfo : IPrimitiveTypeInfo;
-
-public interface IStringTypeInfo : ITypeInfo;
-
-public interface IContainerTypeInfo : ITypeInfo;
-
-public interface IGenericTypeInfo : ITypeInfo;
-
-public interface ISequenceTypeInfo : ITypeInfo;
-
 public class TypeInfoParser {
   public enum ParseStatus {
     SUCCESS,
@@ -51,33 +17,23 @@ public class TypeInfoParser {
     NOT_IMPLEMENTED,
   }
 
-  public IEnumerable<(ParseStatus, ISymbol, ITypeSymbol, ITypeInfo?)>
-      ParseMembers(
-          INamedTypeSymbol containerSymbol) {
+  public IEnumerable<(ParseStatus, ISymbol)> ParseMembers(
+      INamedTypeSymbol containerSymbol) {
     foreach (var memberSymbol in containerSymbol.GetInstanceMembers()) {
       // Tries to parse the type to get info about it
-      var parseStatus = this.ParseMember(
-          memberSymbol,
-          out var memberTypeSymbol,
-          out var memberTypeInfo);
-      yield return (parseStatus, memberSymbol, memberTypeSymbol,
-                    memberTypeInfo);
+      var parseStatus = this.ParseMember(memberSymbol);
+      yield return (parseStatus, memberSymbol);
     }
   }
 
-  public ParseStatus ParseMember(ISymbol memberSymbol,
-                                 out ITypeSymbol? memberTypeSymbol,
-                                 out ITypeInfo? memberTypeInfo) {
-    memberTypeSymbol = null;
-    memberTypeInfo = null;
-
+  public ParseStatus ParseMember(ISymbol memberSymbol) {
     if (memberSymbol is IMethodSymbol) {
       return ParseStatus.SUCCESS;
     }
 
     if (!GetTypeOfMember_(
             memberSymbol,
-            out memberTypeSymbol,
+            out var memberTypeSymbol,
             out var isReadonly)) {
       return ParseStatus.NOT_A_FIELD_OR_PROPERTY_OR_METHOD;
     }
@@ -88,22 +44,15 @@ public class TypeInfoParser {
       return ParseStatus.NOT_A_FIELD_OR_PROPERTY_OR_METHOD;
     }
 
-    return this.ParseTypeSymbol(
-        memberTypeSymbol,
-        isReadonly,
-        out memberTypeInfo);
+    return this.ParseTypeSymbol(memberTypeSymbol, isReadonly);
   }
 
-  public ParseStatus ParseTypeSymbol(
-      ITypeSymbol typeSymbol,
-      bool isReadonly,
-      out ITypeInfo typeInfo) {
+  public ParseStatus ParseTypeSymbol(ITypeSymbol typeSymbol, bool isReadonly) {
     this.ParseNullable_(ref typeSymbol);
 
     if (typeSymbol.IsPrimitive(out var primitiveType)) {
       switch (primitiveType) {
         case SchemaPrimitiveType.BOOLEAN: {
-          typeInfo = new BoolTypeInfo();
           return ParseStatus.SUCCESS;
         }
         case SchemaPrimitiveType.BYTE:
@@ -114,7 +63,6 @@ public class TypeInfoParser {
         case SchemaPrimitiveType.UINT32:
         case SchemaPrimitiveType.INT64:
         case SchemaPrimitiveType.UINT64: {
-          typeInfo = new IntegerTypeInfo();
           return ParseStatus.SUCCESS;
         }
         case SchemaPrimitiveType.SN8:
@@ -123,15 +71,12 @@ public class TypeInfoParser {
         case SchemaPrimitiveType.UN16:
         case SchemaPrimitiveType.SINGLE:
         case SchemaPrimitiveType.DOUBLE: {
-          typeInfo = new FloatTypeInfo();
           return ParseStatus.SUCCESS;
         }
         case SchemaPrimitiveType.CHAR: {
-          typeInfo = new CharTypeInfo();
           return ParseStatus.SUCCESS;
         }
         case SchemaPrimitiveType.ENUM: {
-          typeInfo = new EnumTypeInfo();
           return ParseStatus.SUCCESS;
         }
         default: throw new ArgumentOutOfRangeException();
@@ -139,21 +84,17 @@ public class TypeInfoParser {
     }
 
     if (typeSymbol.IsString()) {
-      typeInfo = new StringTypeInfo();
       return ParseStatus.SUCCESS;
     }
 
     if (typeSymbol.IsSequence(out var elementTypeV2, out var sequenceType)) {
       var elementParseStatus = this.ParseTypeSymbol(
           elementTypeV2,
-          sequenceType.IsReadOnly(),
-          out _);
+          sequenceType.IsReadOnly());
       if (elementParseStatus != ParseStatus.SUCCESS) {
-        typeInfo = default;
         return elementParseStatus;
       }
 
-      typeInfo = new SequenceTypeInfo();
       return ParseStatus.SUCCESS;
     }
 
@@ -161,27 +102,14 @@ public class TypeInfoParser {
         typeSymbol.IsInterface() ||
         typeSymbol.IsStruct() ||
         typeSymbol is IErrorTypeSymbol) {
-      typeInfo = new ContainerTypeInfo();
       return ParseStatus.SUCCESS;
     }
 
     if (typeSymbol.IsGenericTypeParameter(out _)) {
-      typeInfo = new GenericTypeInfo();
       return ParseStatus.SUCCESS;
     }
 
-    typeInfo = default;
     return ParseStatus.NOT_IMPLEMENTED;
-  }
-
-  public ITypeInfo AssertParseType(ITypeSymbol typeSymbol) {
-    var parseStatus
-        = this.ParseTypeSymbol(typeSymbol, true, out var typeInfo);
-    if (parseStatus != ParseStatus.SUCCESS) {
-      throw new NotImplementedException();
-    }
-
-    return typeInfo;
   }
 
   private bool GetTypeOfMember_(
@@ -215,14 +143,4 @@ public class TypeInfoParser {
     Asserts.True(typeSymbol.IsGeneric(out _, out var genericArguments));
     typeSymbol = genericArguments.ToArray()[0];
   }
-
-  private record BoolTypeInfo : IBoolTypeInfo;
-  private class FloatTypeInfo : INumberTypeInfo;
-  private record IntegerTypeInfo : IIntegerTypeInfo;
-  private record CharTypeInfo : ICharTypeInfo;
-  private record StringTypeInfo : IStringTypeInfo;
-  private class EnumTypeInfo : IEnumTypeInfo;
-  private class ContainerTypeInfo : IContainerTypeInfo;
-  private class GenericTypeInfo : IGenericTypeInfo;
-  private class SequenceTypeInfo : ISequenceTypeInfo;
 }

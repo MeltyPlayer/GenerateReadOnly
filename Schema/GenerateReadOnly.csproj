@@ -11,9 +11,9 @@
   <PropertyGroup>
     <PackageProjectUrl>https://github.com/MeltyPlayer/Schema</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Description>Library for converting classes to and from binary. Provides a C# Roslyn generator that automatically implements conversion logic for simple classes.</Description>
-    <PackageId>schema</PackageId>
-    <Title>schema</Title>
+    <Description>Roslyn generator that automatically implements ReadOnly interfaces for annotated classes.</Description>
+    <PackageId>GenerateReadOnly</PackageId>
+    <Title>GenerateReadOnly</Title>
     <Version>0.6.13</Version>
     <Authors>MeltyPlayer</Authors>
   </PropertyGroup>

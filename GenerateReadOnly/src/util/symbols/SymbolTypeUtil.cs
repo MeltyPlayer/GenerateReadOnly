@@ -160,18 +160,18 @@ public static class SymbolTypeUtil {
         !referencedSymbol.IsEnum()) {
       // TODO: Is there a built-in for this?
       return primitiveType switch {
-          SchemaPrimitiveType.BOOLEAN => "bool",
-          SchemaPrimitiveType.SBYTE   => "sbyte",
-          SchemaPrimitiveType.BYTE    => "byte",
-          SchemaPrimitiveType.INT16   => "short",
-          SchemaPrimitiveType.UINT16  => "ushort",
-          SchemaPrimitiveType.INT32   => "int",
-          SchemaPrimitiveType.UINT32  => "uint",
-          SchemaPrimitiveType.INT64   => "long",
-          SchemaPrimitiveType.UINT64  => "ulong",
-          SchemaPrimitiveType.SINGLE  => "float",
-          SchemaPrimitiveType.DOUBLE  => "double",
-          SchemaPrimitiveType.CHAR    => "char",
+          PrimitiveType.BOOLEAN => "bool",
+          PrimitiveType.SBYTE   => "sbyte",
+          PrimitiveType.BYTE    => "byte",
+          PrimitiveType.INT16   => "short",
+          PrimitiveType.UINT16  => "ushort",
+          PrimitiveType.INT32   => "int",
+          PrimitiveType.UINT32  => "uint",
+          PrimitiveType.INT64   => "long",
+          PrimitiveType.UINT64  => "ulong",
+          PrimitiveType.SINGLE  => "float",
+          PrimitiveType.DOUBLE  => "double",
+          PrimitiveType.CHAR    => "char",
       };
     }
 
@@ -208,12 +208,12 @@ public static class SymbolTypeUtil {
                           convertName,
                           getNamespaceParts));
         if (tupleItemName.Length > 0 && tupleItemName != $"Item{1 + i}") {
-          sb.Append(" ");
+          sb.Append(' ');
           sb.Append(tupleItemName);
         }
       }
 
-      sb.Append(")");
+      sb.Append(')');
 
       return sb.ToString();
     }

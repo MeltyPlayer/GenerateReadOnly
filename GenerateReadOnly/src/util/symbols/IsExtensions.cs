@@ -17,34 +17,34 @@ public static class IsExtensions {
     }
 
     return underlyingSymbol.IsPrimitive(out var primitiveType) &&
-           primitiveType != SchemaPrimitiveType.UNDEFINED;
+           primitiveType != PrimitiveType.UNDEFINED;
   }
 
   public static bool IsPrimitive(this ISymbol symbol,
-                                 out SchemaPrimitiveType primitiveType) {
+                                 out PrimitiveType primitiveType) {
     var typeSymbol = symbol as ITypeSymbol;
 
     if (typeSymbol?.TypeKind == TypeKind.Enum) {
-      primitiveType = SchemaPrimitiveType.ENUM;
+      primitiveType = PrimitiveType.ENUM;
       return true;
     }
 
     primitiveType = typeSymbol?.SpecialType switch {
-        SpecialType.System_Boolean => SchemaPrimitiveType.BOOLEAN,
-        SpecialType.System_Char    => SchemaPrimitiveType.CHAR,
-        SpecialType.System_SByte   => SchemaPrimitiveType.SBYTE,
-        SpecialType.System_Byte    => SchemaPrimitiveType.BYTE,
-        SpecialType.System_Int16   => SchemaPrimitiveType.INT16,
-        SpecialType.System_UInt16  => SchemaPrimitiveType.UINT16,
-        SpecialType.System_Int32   => SchemaPrimitiveType.INT32,
-        SpecialType.System_UInt32  => SchemaPrimitiveType.UINT32,
-        SpecialType.System_Int64   => SchemaPrimitiveType.INT64,
-        SpecialType.System_UInt64  => SchemaPrimitiveType.UINT64,
-        SpecialType.System_Single  => SchemaPrimitiveType.SINGLE,
-        SpecialType.System_Double  => SchemaPrimitiveType.DOUBLE,
-        _                          => SchemaPrimitiveType.UNDEFINED
+        SpecialType.System_Boolean => PrimitiveType.BOOLEAN,
+        SpecialType.System_Char    => PrimitiveType.CHAR,
+        SpecialType.System_SByte   => PrimitiveType.SBYTE,
+        SpecialType.System_Byte    => PrimitiveType.BYTE,
+        SpecialType.System_Int16   => PrimitiveType.INT16,
+        SpecialType.System_UInt16  => PrimitiveType.UINT16,
+        SpecialType.System_Int32   => PrimitiveType.INT32,
+        SpecialType.System_UInt32  => PrimitiveType.UINT32,
+        SpecialType.System_Int64   => PrimitiveType.INT64,
+        SpecialType.System_UInt64  => PrimitiveType.UINT64,
+        SpecialType.System_Single  => PrimitiveType.SINGLE,
+        SpecialType.System_Double  => PrimitiveType.DOUBLE,
+        _                          => PrimitiveType.UNDEFINED
     };
-    return primitiveType != SchemaPrimitiveType.UNDEFINED;
+    return primitiveType != PrimitiveType.UNDEFINED;
   }
 
   public static bool IsClass(this ISymbol symbol)

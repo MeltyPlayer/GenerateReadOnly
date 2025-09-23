@@ -10,6 +10,12 @@
 
 Roslyn generator that automatically implements ReadOnly interfaces for annotated types.
 
+## Background
+
+I found myself really wanting to have IReadOnly versions of my types for type-safety, similar to what C# provides with IReadOnlyList, IReadOnlyDictionary, ReadOnlySpan, etc., and similar to what is possible in C++ with const. I started setting up these types manually, but this quickly grew out of hand and was hard to manage.
+
+This library aims to provide this functionality without too much extra boilerplate.
+
 ## Usage
 
 ### Simple cases, purely read only
@@ -115,7 +121,7 @@ public partial interface IReadOnlyNode {
 }
 ```
 
-### Forcing mutability
+#### Forcing mutability
 
 If you don't want a type to be swapped out for its IReadOnly counterpart, you can force it to be kept by annotating the type with `readOnly.KeepMutableTypeAttribute`:
 
@@ -156,4 +162,26 @@ public partial interface IReadOnlyBar {
 
   void KeepInParam(Foo value);
 }
+```
+
+### Inheritance
+
+If a type with a read only interface inherits from another class with a read only interface, the read only interface will also automatically set up the same inheritance:
+
+**User code:**
+```cs
+using readOnly;
+
+[GenerateReadOnly]
+public partial class Parent;
+
+[GenerateReadOnly]
+public partial class Child : Parent;
+```
+
+**Generated code:**
+```cs
+public partial interface IReadOnlyParent;
+
+public partial interface IReadOnlyChild : IReadOnlyParent;
 ```

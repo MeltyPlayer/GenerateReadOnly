@@ -29,8 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Schema\GenerateReadOnly.csproj" PrivateAssets="all" OutputItemType="Analyzer" />
-    <ProjectReference Include="../SchemaTypes/SchemaTypes.csproj" />
+    <ProjectReference Include="..\GenerateReadOnly\GenerateReadOnly.csproj" PrivateAssets="all" OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>

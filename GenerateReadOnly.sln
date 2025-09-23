@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.0.11012.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateReadOnly", "Schema\GenerateReadOnly.csproj", "{CC9F9DBB-B1BE-48C7-9D3D-4EBBDC7716D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateReadOnly", "GenerateReadOnly\GenerateReadOnly.csproj", "{CC9F9DBB-B1BE-48C7-9D3D-4EBBDC7716D2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateReadOnly Tests", "Schema Tests\GenerateReadOnly Tests.csproj", "{177FC6DA-EA7E-4F99-BFA1-465F3C1FAFD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateReadOnly Tests", "GenerateReadOnly Tests\GenerateReadOnly Tests.csproj", "{177FC6DA-EA7E-4F99-BFA1-465F3C1FAFD1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateReadOnly Build Tests", "Schema Build Tests\GenerateReadOnly Build Tests.csproj", "{27516500-3785-4348-A9B0-93E220F0B7E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateReadOnly Build Tests", "GenerateReadOnly Build Tests\GenerateReadOnly Build Tests.csproj", "{27516500-3785-4348-A9B0-93E220F0B7E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

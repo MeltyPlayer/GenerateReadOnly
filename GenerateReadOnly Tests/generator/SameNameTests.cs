@@ -8,8 +8,8 @@ internal class SameNameTests {
   public void TestSameName() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
         
         [GenerateReadOnly]

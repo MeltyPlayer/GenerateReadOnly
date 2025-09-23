@@ -33,7 +33,7 @@ internal class VarianceTests {
   public void TestAddsCovarianceWhenPossible() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -85,7 +85,7 @@ internal class VarianceTests {
   public void TestAddsContravarianceWhenPossible() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -134,8 +134,8 @@ internal class VarianceTests {
   public void TestDoesNotAddVarianceForBothInAndOutTypes() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -168,8 +168,8 @@ internal class VarianceTests {
       string variance) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using readOnly.generator;
-
+          using readOnly;
+          
           namespace foo.bar;
           
           public interface IValue<{{variance}}T>;
@@ -203,8 +203,8 @@ internal class VarianceTests {
       string variance) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using readOnly.generator;
-
+          using readOnly;
+          
           namespace foo.bar;
           
           public interface IValue<{{variance}}T>;
@@ -234,7 +234,7 @@ internal class VarianceTests {
   public void TestDoesNotAddContravarianceForSet() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -266,8 +266,8 @@ internal class VarianceTests {
   public void TestDoesNotAddVarianceWhenUsedAsTypeConstraint() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
         
         public partial interface IFinCollection<in T>;
@@ -293,8 +293,8 @@ internal class VarianceTests {
   public void TestDoesNotAddVarianceWhenUsedAsMethodConstraint() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
         
         public partial interface IFinCollection<out T>;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
-using readOnly.generator;
+using readOnly;
 
 
 namespace build;

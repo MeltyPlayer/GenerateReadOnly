@@ -16,8 +16,8 @@ internal class BasicReadOnlyGeneratorTests {
   public void TestEmpty(string emptySrc) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using readOnly.generator;
-
+          using readOnly;
+          
           namespace foo.bar;
 
           [GenerateReadOnly]
@@ -57,8 +57,8 @@ internal class BasicReadOnlyGeneratorTests {
                              string readOnlyName) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $"""
-         using readOnly.generator;
-
+         using readOnly;
+         
          namespace foo.bar;
 
          [GenerateReadOnly]
@@ -80,8 +80,8 @@ internal class BasicReadOnlyGeneratorTests {
   public void TestSimpleGenerics() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
 
         [GenerateReadOnly]

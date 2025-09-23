@@ -15,20 +15,6 @@ using readOnly.util.types;
 
 namespace readOnly.generator;
 
-[AttributeUsage(AttributeTargets.Class |
-                AttributeTargets.Interface |
-                AttributeTargets.Struct)]
-public class GenerateReadOnlyAttribute : Attribute;
-
-[AttributeUsage(AttributeTargets.Method)]
-public class ConstAttribute : Attribute;
-
-[AttributeUsage(AttributeTargets.GenericParameter |
-                AttributeTargets.Parameter |
-                AttributeTargets.Property |
-                AttributeTargets.Method)]
-public class KeepMutableTypeAttribute : Attribute;
-
 [Generator(LanguageNames.CSharp)]
 public class ReadOnlyTypeGenerator
     : BNamedTypesWithAttributeGenerator<GenerateReadOnlyAttribute> {

@@ -15,8 +15,8 @@ internal class ConstraintTests {
   public void TestEachConstraintType(string constraint) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using readOnly.generator;
-
+          using readOnly;
+          
           namespace foo.bar;
           
           [GenerateReadOnly]
@@ -45,8 +45,8 @@ internal class ConstraintTests {
   public void TestCircularConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
 
         [GenerateReadOnly]
@@ -82,8 +82,8 @@ internal class ConstraintTests {
   public void TestGenericSubConstraint() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -116,8 +116,8 @@ internal class ConstraintTests {
   public void TestMultipleGenericConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
         
         [GenerateReadOnly]

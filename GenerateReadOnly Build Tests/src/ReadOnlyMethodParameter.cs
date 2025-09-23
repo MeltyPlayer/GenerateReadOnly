@@ -1,4 +1,4 @@
-﻿using readOnly.generator;
+﻿using readOnly;
 
 namespace build;
 

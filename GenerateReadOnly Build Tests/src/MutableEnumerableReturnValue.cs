@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using readOnly.generator;
+using readOnly;
 
 
 namespace build;

@@ -8,8 +8,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesTypeConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -32,8 +33,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableTypeConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -56,8 +58,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableTypeConstraintsDownstream() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -93,8 +96,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesMethodConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -124,8 +128,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableMethodConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -155,8 +160,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesReturnValues() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -186,8 +192,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableReturnValues() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -217,8 +224,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -248,8 +256,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -371,8 +380,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableProperties() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -426,6 +436,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesGenericReturnValue() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
         using System.Collections.Generic;
 
@@ -554,6 +565,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteGenericMethodParameter() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
         using System.Collections.Generic;
 

@@ -9,8 +9,8 @@ internal class AutoInheritanceTests {
   public void TestKnown(string knownBase) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $"""
-          using readOnly.generator;
-
+          using readOnly;
+          
           namespace foo.bar;
 
           [GenerateReadOnly]
@@ -32,8 +32,8 @@ internal class AutoInheritanceTests {
   public void TestAlreadyConstInterfaceWithConstraint() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
 
         public interface IAlreadyConst {
@@ -60,8 +60,8 @@ internal class AutoInheritanceTests {
   public void TestAlreadyConstInterfaceParent() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
         
         public interface IAlreadyConst {
@@ -88,8 +88,8 @@ internal class AutoInheritanceTests {
   public void TestAlreadyConstInterfaceParentFromAnotherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar.place1 {
           public class OtherParent {
             public interface IAlreadyConst {
@@ -124,8 +124,8 @@ internal class AutoInheritanceTests {
   public void TestAutoInheritance() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -161,8 +161,8 @@ internal class AutoInheritanceTests {
   public void TestAutoInheritanceFromAnotherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar.other {
           public partial class OtherParent {
             [GenerateReadOnly]
@@ -220,7 +220,7 @@ internal class AutoInheritanceTests {
   public void TestAutoGenericInheritance() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
 
         namespace foo.bar;
         

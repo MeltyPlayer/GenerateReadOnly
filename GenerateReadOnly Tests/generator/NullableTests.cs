@@ -68,8 +68,8 @@ internal class NullableTests {
   public void TestSupportsNullableGenericParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace foo.bar;
 
         [GenerateReadOnly]

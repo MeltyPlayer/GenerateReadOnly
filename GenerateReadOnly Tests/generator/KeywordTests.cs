@@ -8,8 +8,8 @@ internal class KeywordTests {
   public void TestKeywords() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
-
+        using readOnly;
+        
         namespace @const;
 
         [GenerateReadOnly]

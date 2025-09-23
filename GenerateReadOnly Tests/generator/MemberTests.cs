@@ -20,8 +20,8 @@ internal class MemberTests {
   public void TestPrimitive(string primitiveType) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using readOnly.generator;
-
+          using readOnly;
+          
           namespace foo.bar;
           
           [GenerateReadOnly]
@@ -49,7 +49,7 @@ internal class MemberTests {
   public void TestGeneric() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -80,7 +80,7 @@ internal class MemberTests {
   public void TestNestedGeneric() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -111,7 +111,7 @@ internal class MemberTests {
   public void TestIndexer() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -142,7 +142,7 @@ internal class MemberTests {
   public void TestMultiIndexer() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -176,7 +176,7 @@ internal class MemberTests {
   public void TestSpecialParameterTypes(string paramType) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using readOnly.generator;
+          using readOnly;
           using System.Collections.Generic;
 
           namespace foo.bar;
@@ -207,7 +207,7 @@ internal class MemberTests {
   public void TestParams() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -238,7 +238,7 @@ internal class MemberTests {
   public void TestNullableValues() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -273,7 +273,7 @@ internal class MemberTests {
   public void TestOptionalValues() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;

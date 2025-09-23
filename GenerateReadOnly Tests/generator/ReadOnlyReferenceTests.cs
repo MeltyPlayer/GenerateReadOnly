@@ -8,7 +8,7 @@ internal class ReadOnlyReferenceTests {
   public void TestInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -54,7 +54,7 @@ internal class ReadOnlyReferenceTests {
   public void TestNullableInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -100,7 +100,7 @@ internal class ReadOnlyReferenceTests {
   public void TestIEnumerableInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using foo.bar.other;
         using System.Collections.Generic;
 
@@ -147,7 +147,7 @@ internal class ReadOnlyReferenceTests {
   public void TestTupleInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -193,7 +193,7 @@ internal class ReadOnlyReferenceTests {
   public void TestTypeConstraintInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -233,7 +233,7 @@ internal class ReadOnlyReferenceTests {
   public void TestMethodConstraintInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -280,7 +280,7 @@ internal class ReadOnlyReferenceTests {
   public void TestInOtherType() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using foo.bar.other;
 
         namespace foo.bar;
@@ -328,7 +328,7 @@ internal class ReadOnlyReferenceTests {
   public void TestGenericInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using foo.bar.wrong;
         using foo.bar.correct;
 
@@ -390,7 +390,7 @@ internal class ReadOnlyReferenceTests {
   public void TestIgnoresFakeMatches() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using foo.bar.correct;
         using foo.bar.wrong;
 

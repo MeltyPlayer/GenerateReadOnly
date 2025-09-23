@@ -11,8 +11,8 @@ internal class DefaultValueTests {
   public void TestSupportsDefaultBools(string boolValue) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using readOnly.generator;
-
+          using readOnly;
+          
           namespace foo.bar;
           
           [GenerateReadOnly]
@@ -45,8 +45,8 @@ internal class DefaultValueTests {
   public void TestSupportsDefaultInts(string intValue) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using readOnly.generator;
-
+          using readOnly;
+          
           namespace foo.bar;
           
           [GenerateReadOnly]
@@ -78,7 +78,7 @@ internal class DefaultValueTests {
       TestSupportsDefaultEnums(string enumValue, string readonlyValue) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using readOnly.generator;
+          using readOnly;
           using foo.bar.other;
 
           namespace foo.bar.other {

@@ -11,7 +11,7 @@
   <PropertyGroup>
     <PackageProjectUrl>https://github.com/MeltyPlayer/Schema</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Description>Roslyn generator that automatically implements ReadOnly interfaces for annotated classes.</Description>
+    <Description>Roslyn generator that automatically implements ReadOnly interfaces for annotated types.</Description>
     <PackageId>GenerateReadOnly</PackageId>
     <Title>GenerateReadOnly</Title>
     <Version>0.0.1</Version>

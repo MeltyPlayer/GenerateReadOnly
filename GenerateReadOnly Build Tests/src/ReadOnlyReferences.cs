@@ -1,6 +1,6 @@
 ﻿using build;
 
-using readOnly.generator;
+using readOnly;
 
 
 namespace foo.bar;

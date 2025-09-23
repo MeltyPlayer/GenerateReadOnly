@@ -1,4 +1,4 @@
-# Schema
+# GenerateReadOnly
 
 ![GitHub](https://img.shields.io/github/license/MeltyPlayer/GenerateReadOnly)
 [![Nuget](https://img.shields.io/nuget/v/GenerateReadOnly)](https://www.nuget.org/packages/GenerateReadOnly)

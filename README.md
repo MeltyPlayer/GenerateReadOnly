@@ -90,7 +90,7 @@ public partial class Bar {
 public partial interface IReadOnlyFoo;
 
 public partial interface IReadOnlyBar {
-  public IReadOnlyFoo Value { get; }
+  IReadOnlyFoo Value { get; }
 }
 ```
 
@@ -111,7 +111,7 @@ public partial class Node {
 **Generated code:**
 ```cs
 public partial interface IReadOnlyNode {
-  public IReadOnlyNode Child { get; }
+  IReadOnlyNode Child { get; }
 }
 ```
 

@@ -1,6 +1,6 @@
-﻿using readOnly;
+﻿using build;
 
-using schema.generator;
+using readOnly.generator;
 
 
 namespace foo.bar;

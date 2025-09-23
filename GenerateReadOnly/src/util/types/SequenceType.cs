@@ -1,4 +1,4 @@
-﻿namespace schema.util.types;
+﻿namespace readOnly.util.types;
 
 public enum SequenceType {
   MUTABLE_ARRAY,

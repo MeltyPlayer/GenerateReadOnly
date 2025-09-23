@@ -1,14 +1,14 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class ReadOnlySubstitutionTests {
   [Test]
   public void TestSubstitutesTypeConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -23,7 +23,7 @@ internal class ReadOnlySubstitutionTests {
         
         public partial interface IWrapper<T> : IReadOnlyWrapper<T>;
         
-        public partial interface IReadOnlyWrapper<out T> where T : schema.readOnly.IReadOnlyValue;
+        public partial interface IReadOnlyWrapper<out T> where T : readOnly.generator.IReadOnlyValue;
 
         """);
   }
@@ -32,7 +32,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableTypeConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -47,7 +47,7 @@ internal class ReadOnlySubstitutionTests {
         
         public partial interface IWrapper<T> : IReadOnlyWrapper<T>;
         
-        public partial interface IReadOnlyWrapper<out T> where T : schema.readOnly.IValue;
+        public partial interface IReadOnlyWrapper<out T> where T : readOnly.generator.IValue;
 
         """);
   }
@@ -56,7 +56,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableTypeConstraintsDownstream() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -74,7 +74,7 @@ internal class ReadOnlySubstitutionTests {
         
         public partial interface IBase<T1, T2> : IReadOnlyBase<T1, T2>;
         
-        public partial interface IReadOnlyBase<out T1, out T2> where T1 : schema.readOnly.IValue where T2 : schema.readOnly.IReadOnlyValue;
+        public partial interface IReadOnlyBase<out T1, out T2> where T1 : readOnly.generator.IValue where T2 : readOnly.generator.IReadOnlyValue;
 
         """,
         """
@@ -84,7 +84,7 @@ internal class ReadOnlySubstitutionTests {
         
         public partial interface IChild : IReadOnlyChild;
         
-        public partial interface IReadOnlyChild : IReadOnlyBase<schema.readOnly.IValue, schema.readOnly.IReadOnlyValue>;
+        public partial interface IReadOnlyChild : IReadOnlyBase<readOnly.generator.IValue, readOnly.generator.IReadOnlyValue>;
 
         """);
   }
@@ -93,7 +93,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesMethodConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -114,7 +114,7 @@ internal class ReadOnlySubstitutionTests {
         }
         
         public partial interface IReadOnlyWrapper {
-          public void Foo<T>() where T : schema.readOnly.IReadOnlyValue;
+          public void Foo<T>() where T : readOnly.generator.IReadOnlyValue;
         }
 
         """);
@@ -124,7 +124,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableMethodConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -145,7 +145,7 @@ internal class ReadOnlySubstitutionTests {
         }
         
         public partial interface IReadOnlyWrapper {
-          public void Foo<T>() where T : schema.readOnly.IValue;
+          public void Foo<T>() where T : readOnly.generator.IValue;
         }
 
         """);
@@ -155,7 +155,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesReturnValues() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -172,11 +172,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          schema.readOnly.IReadOnlyValue IReadOnlyWrapper.Foo() => Foo();
+          readOnly.generator.IReadOnlyValue IReadOnlyWrapper.Foo() => Foo();
         }
         
         public partial interface IReadOnlyWrapper {
-          public schema.readOnly.IReadOnlyValue Foo();
+          public readOnly.generator.IReadOnlyValue Foo();
         }
 
         """);
@@ -186,7 +186,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableReturnValues() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -203,11 +203,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          schema.readOnly.IValue IReadOnlyWrapper.Foo() => Foo();
+          readOnly.generator.IValue IReadOnlyWrapper.Foo() => Foo();
         }
         
         public partial interface IReadOnlyWrapper {
-          public schema.readOnly.IValue Foo();
+          public readOnly.generator.IValue Foo();
         }
 
         """);
@@ -217,7 +217,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -234,11 +234,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          void IReadOnlyWrapper.Foo(schema.readOnly.IValue value) => Foo(value);
+          void IReadOnlyWrapper.Foo(readOnly.generator.IValue value) => Foo(value);
         }
         
         public partial interface IReadOnlyWrapper {
-          public void Foo(schema.readOnly.IValue value);
+          public void Foo(readOnly.generator.IValue value);
         }
 
         """);
@@ -248,7 +248,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -265,11 +265,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          void IReadOnlyWrapper.Foo(schema.readOnly.IValue value) => Foo(value);
+          void IReadOnlyWrapper.Foo(readOnly.generator.IValue value) => Foo(value);
         }
         
         public partial interface IReadOnlyWrapper {
-          public void Foo(schema.readOnly.IValue value);
+          public void Foo(readOnly.generator.IValue value);
         }
 
         """);
@@ -279,7 +279,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteIndexerParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -296,11 +296,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          int IReadOnlyWrapper.this[schema.readOnly.IValue value] => this[value];
+          int IReadOnlyWrapper.this[readOnly.generator.IValue value] => this[value];
         }
         
         public partial interface IReadOnlyWrapper {
-          public int this[schema.readOnly.IValue value] { get; }
+          public int this[readOnly.generator.IValue value] { get; }
         }
 
         """);
@@ -310,7 +310,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableIndexerParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -327,11 +327,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          int IReadOnlyWrapper.this[schema.readOnly.IValue value] => this[value];
+          int IReadOnlyWrapper.this[readOnly.generator.IValue value] => this[value];
         }
         
         public partial interface IReadOnlyWrapper {
-          public int this[schema.readOnly.IValue value] { get; }
+          public int this[readOnly.generator.IValue value] { get; }
         }
 
         """);
@@ -341,7 +341,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesProperties() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -357,11 +357,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          schema.readOnly.IReadOnlyValue IReadOnlyWrapper.Foo => Foo;
+          readOnly.generator.IReadOnlyValue IReadOnlyWrapper.Foo => Foo;
         }
         
         public partial interface IReadOnlyWrapper {
-          public schema.readOnly.IReadOnlyValue Foo { get; }
+          public readOnly.generator.IReadOnlyValue Foo { get; }
         }
 
         """);
@@ -371,7 +371,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableProperties() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -387,11 +387,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          schema.readOnly.IValue IReadOnlyWrapper.Foo => Foo;
+          readOnly.generator.IValue IReadOnlyWrapper.Foo => Foo;
         }
         
         public partial interface IReadOnlyWrapper {
-          public schema.readOnly.IValue Foo { get; }
+          public readOnly.generator.IValue Foo { get; }
         }
 
         """);
@@ -401,7 +401,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesGenericInterface() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -417,7 +417,7 @@ internal class ReadOnlySubstitutionTests {
         
         public partial interface IWrapper : IReadOnlyWrapper;
         
-        public partial interface IReadOnlyWrapper : System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue>;
+        public partial interface IReadOnlyWrapper : System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue>;
 
         """);
   }
@@ -426,7 +426,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesGenericReturnValue() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -444,11 +444,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue> IReadOnlyWrapper.Foo() => (System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue>)(object) Foo();
+          System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue> IReadOnlyWrapper.Foo() => (System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue>)(object) Foo();
         }
         
         public partial interface IReadOnlyWrapper {
-          public System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue> Foo();
+          public System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue> Foo();
         }
 
         """);
@@ -458,7 +458,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesGenericProperty() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -476,11 +476,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue> IReadOnlyWrapper.Foo => (System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue>)(object) Foo;
+          System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue> IReadOnlyWrapper.Foo => (System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue>)(object) Foo;
         }
         
         public partial interface IReadOnlyWrapper {
-          public System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue> Foo { get; }
+          public System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue> Foo { get; }
         }
 
         """);
@@ -490,7 +490,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesGenericIndexer() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -508,11 +508,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue> IReadOnlyWrapper.this[int foo] => (System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue>)(object) this[foo];
+          System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue> IReadOnlyWrapper.this[int foo] => (System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue>)(object) this[foo];
         }
         
         public partial interface IReadOnlyWrapper {
-          public System.Collections.Generic.IEnumerable<schema.readOnly.IReadOnlyValue> this[int foo] { get; }
+          public System.Collections.Generic.IEnumerable<readOnly.generator.IReadOnlyValue> this[int foo] { get; }
         }
 
         """);
@@ -522,7 +522,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteGenericIndexerParameter() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -540,11 +540,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
       
         public partial interface IWrapper : IReadOnlyWrapper {
-          void IReadOnlyWrapper.this[System.Collections.Generic.IEnumerable<schema.readOnly.IValue> foo] => this[foo];
+          void IReadOnlyWrapper.this[System.Collections.Generic.IEnumerable<readOnly.generator.IValue> foo] => this[foo];
         }
         
         public partial interface IReadOnlyWrapper {
-          public void this[System.Collections.Generic.IEnumerable<schema.readOnly.IValue> foo] { get; }
+          public void this[System.Collections.Generic.IEnumerable<readOnly.generator.IValue> foo] { get; }
         }
 
         """);
@@ -554,7 +554,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteGenericMethodParameter() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -572,11 +572,11 @@ internal class ReadOnlySubstitutionTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          void IReadOnlyWrapper.Foo(System.Collections.Generic.IEnumerable<schema.readOnly.IValue> foo) => Foo(foo);
+          void IReadOnlyWrapper.Foo(System.Collections.Generic.IEnumerable<readOnly.generator.IValue> foo) => Foo(foo);
         }
         
         public partial interface IReadOnlyWrapper {
-          public void Foo(System.Collections.Generic.IEnumerable<schema.readOnly.IValue> foo);
+          public void Foo(System.Collections.Generic.IEnumerable<readOnly.generator.IValue> foo);
         }
 
         """);

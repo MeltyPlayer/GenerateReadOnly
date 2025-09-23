@@ -1,14 +1,14 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class NullableTests {
   [Test]
   public void TestSupportsNullablePrimitiveProperties() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         
         namespace foo.bar;
 
@@ -38,7 +38,7 @@ internal class NullableTests {
   public void TestSupportsNullableGenericProperties() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -68,7 +68,7 @@ internal class NullableTests {
   public void TestSupportsNullableGenericParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
 

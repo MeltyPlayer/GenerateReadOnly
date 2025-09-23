@@ -4,10 +4,10 @@ using System.Linq;
 
 using Microsoft.CodeAnalysis;
 
-using schema.util.types;
+using readOnly.util.types;
 
 
-namespace schema.util.symbols;
+namespace readOnly.util.symbols;
 
 public static class IsExtensions {
   public static bool IsEnum(this ISymbol symbol) {

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 
-using schema.generator;
+using readOnly.generator;
 
 
-namespace readOnly;
+namespace build;
 
 [GenerateReadOnly]
-public partial class ReadOnlyEnumerableReturnValue {
+public partial class MutableEnumerableReturnValue {
   [Const]
+  [KeepMutableType]
   public IEnumerable<IFooBar> Foo(int bar) => default!;
 }

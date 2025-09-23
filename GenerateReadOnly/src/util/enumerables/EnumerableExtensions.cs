@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace schema.util.enumerables;
+namespace readOnly.util.enumerables;
 
 public static class EnumerableExtensions {
   public static IEnumerable<T> Yield<T>(this T value) {

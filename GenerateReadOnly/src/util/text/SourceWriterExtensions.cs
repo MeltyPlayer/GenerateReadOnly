@@ -1,4 +1,4 @@
-﻿namespace schema.util.text;
+﻿namespace readOnly.util.text;
 
 public static class SourceWriterExtensions {
   public static ISourceWriter EnterBlock(this ISourceWriter sw,

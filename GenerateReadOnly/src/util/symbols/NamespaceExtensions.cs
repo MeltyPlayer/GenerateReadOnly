@@ -5,10 +5,10 @@ using System.Runtime.CompilerServices;
 
 using Microsoft.CodeAnalysis;
 
-using schema.util.asserts;
+using readOnly.util.asserts;
 
 
-namespace schema.util.symbols;
+namespace readOnly.util.symbols;
 
 public static class NamespaceExtensions {
   [MethodImpl(MethodImplOptions.AggressiveInlining)]

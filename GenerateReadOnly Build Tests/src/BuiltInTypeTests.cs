@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
-using schema.generator;
+using readOnly.generator;
 
 
-namespace readOnly;
+namespace build;
 
 public partial class BuiltInTypeTests {
   [GenerateReadOnly]

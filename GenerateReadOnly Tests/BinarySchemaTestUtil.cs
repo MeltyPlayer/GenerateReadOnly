@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 #pragma warning disable CS8604
 
 
-namespace schema.binary;
+namespace readOnly.binary;
 
 internal static class BinarySchemaTestUtil {
   public static CSharpCompilation Compilation =

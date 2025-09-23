@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace schema.util.types;
+namespace readOnly.util.types;
 
 public static class TypeExtensions {
   public static string GetCorrectName(this Type type)

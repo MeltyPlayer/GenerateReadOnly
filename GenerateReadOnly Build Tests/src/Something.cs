@@ -1,4 +1,4 @@
-﻿namespace readOnly;
+﻿namespace build;
 
 public class Something {
   public IReadOnlyValueType Field { get; set; }

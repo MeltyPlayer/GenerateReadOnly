@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 
 
-namespace schema.util.symbols;
+namespace readOnly.util.symbols;
 
 public interface ITypeParameterSymbolVarianceSet {
   VarianceKind AllowedVariance(ITypeParameterSymbol typeParameterSymbol);

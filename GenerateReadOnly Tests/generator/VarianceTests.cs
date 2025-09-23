@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class VarianceTests {
   [Test]
@@ -10,7 +10,7 @@ internal class VarianceTests {
   public void TestSupportsEachTypeOfVarianceInType(string variance) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
           
@@ -33,7 +33,7 @@ internal class VarianceTests {
   public void TestAddsCovarianceWhenPossible() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -85,7 +85,7 @@ internal class VarianceTests {
   public void TestAddsContravarianceWhenPossible() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -134,7 +134,7 @@ internal class VarianceTests {
   public void TestDoesNotAddVarianceForBothInAndOutTypes() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -168,7 +168,7 @@ internal class VarianceTests {
       string variance) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
           
@@ -203,7 +203,7 @@ internal class VarianceTests {
       string variance) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
           
@@ -234,7 +234,7 @@ internal class VarianceTests {
   public void TestDoesNotAddContravarianceForSet() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -266,7 +266,7 @@ internal class VarianceTests {
   public void TestDoesNotAddVarianceWhenUsedAsTypeConstraint() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -293,7 +293,7 @@ internal class VarianceTests {
   public void TestDoesNotAddVarianceWhenUsedAsMethodConstraint() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         

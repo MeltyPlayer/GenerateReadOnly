@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class AutoInheritanceTests {
   [Test]
@@ -9,7 +9,7 @@ internal class AutoInheritanceTests {
   public void TestKnown(string knownBase) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
 
@@ -32,7 +32,7 @@ internal class AutoInheritanceTests {
   public void TestAlreadyConstInterfaceWithConstraint() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
 
@@ -60,7 +60,7 @@ internal class AutoInheritanceTests {
   public void TestAlreadyConstInterfaceParent() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -88,7 +88,7 @@ internal class AutoInheritanceTests {
   public void TestAlreadyConstInterfaceParentFromAnotherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar.place1 {
           public class OtherParent {
@@ -124,7 +124,7 @@ internal class AutoInheritanceTests {
   public void TestAutoInheritance() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -161,7 +161,7 @@ internal class AutoInheritanceTests {
   public void TestAutoInheritanceFromAnotherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar.other {
           public partial class OtherParent {
@@ -220,7 +220,7 @@ internal class AutoInheritanceTests {
   public void TestAutoGenericInheritance() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         

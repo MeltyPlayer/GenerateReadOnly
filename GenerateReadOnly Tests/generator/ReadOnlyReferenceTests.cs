@@ -1,14 +1,14 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class ReadOnlyReferenceTests {
   [Test]
   public void TestInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -54,7 +54,7 @@ internal class ReadOnlyReferenceTests {
   public void TestNullableInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -100,7 +100,7 @@ internal class ReadOnlyReferenceTests {
   public void TestIEnumerableInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using foo.bar.other;
         using System.Collections.Generic;
 
@@ -147,7 +147,7 @@ internal class ReadOnlyReferenceTests {
   public void TestTupleInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -193,7 +193,7 @@ internal class ReadOnlyReferenceTests {
   public void TestTypeConstraintInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -233,7 +233,7 @@ internal class ReadOnlyReferenceTests {
   public void TestMethodConstraintInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using foo.bar.other;
 
         namespace foo.bar.other {
@@ -280,7 +280,7 @@ internal class ReadOnlyReferenceTests {
   public void TestInOtherType() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using foo.bar.other;
 
         namespace foo.bar;
@@ -328,7 +328,7 @@ internal class ReadOnlyReferenceTests {
   public void TestGenericInOtherNamespace() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using foo.bar.wrong;
         using foo.bar.correct;
 
@@ -390,7 +390,7 @@ internal class ReadOnlyReferenceTests {
   public void TestIgnoresFakeMatches() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
         using foo.bar.correct;
         using foo.bar.wrong;
 

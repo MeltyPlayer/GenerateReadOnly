@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 
-using schema.generator;
+using readOnly.generator;
 
 
-namespace readOnly;
+namespace build;
 
 [GenerateReadOnly]
 public partial interface ISomeType<T> {

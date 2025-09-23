@@ -4,11 +4,12 @@ using System.Linq;
 
 using Microsoft.CodeAnalysis;
 
-using schema.util.asserts;
-using schema.util.symbols;
+using readOnly.util.asserts;
+
+using readOnly.util.symbols;
 
 
-namespace schema.util.types;
+namespace readOnly.util.types;
 
 public static class TypeInfoParser {
   public enum ParseStatus {

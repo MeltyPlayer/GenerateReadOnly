@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 
-namespace schema.util.diagnostics;
+namespace readOnly.util.diagnostics;
 
 public interface IDiagnosticReporter {
   void WithContext(SyntaxNodeAnalysisContext context);

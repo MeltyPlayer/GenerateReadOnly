@@ -3,7 +3,7 @@
 using NUnit.Framework;
 
 
-namespace schema.util;
+namespace readOnly.util;
 
 public class NameofUtilTests {
   public static uint Value { get; set; }
@@ -36,7 +36,7 @@ public class NameofUtilTests {
                     NameofUtil.GetChainedAccessFromCallerArgumentExpression(
                         typeof(NameofUtilTests),
                         ReturnArgumentText_(
-                            nameof(schema.util.NameofUtilTests.Value))));
+                            nameof(NameofUtilTests.Value))));
   }
 
   [Test]

@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 
 
-namespace schema.util.symbols;
+namespace readOnly.util.symbols;
 
 public static class NamedTypeSymbolUtil {
   public static IEnumerable<ISymbol> GetInstanceMembers(

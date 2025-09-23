@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-using schema.generator;
+using readOnly.generator;
 
 
-namespace readOnly;
+namespace build;
 
 [GenerateReadOnly]
 public partial interface IDoesNotAddInVariance<T> {

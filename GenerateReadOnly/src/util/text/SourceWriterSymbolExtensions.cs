@@ -2,10 +2,10 @@
 
 using Microsoft.CodeAnalysis;
 
-using schema.util.symbols;
+using readOnly.util.symbols;
 
 
-namespace schema.util.text;
+namespace readOnly.util.text;
 
 public static class SourceWriterSymbolExtensions {
   public static void WriteNamespaceAndParentTypeBlocks(

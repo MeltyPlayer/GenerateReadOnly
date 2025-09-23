@@ -4,10 +4,10 @@ using System.Runtime.CompilerServices;
 
 using Microsoft.CodeAnalysis;
 
-using schema.util.enumerables;
+using readOnly.util.enumerables;
 
 
-namespace schema.util.symbols;
+namespace readOnly.util.symbols;
 
 public static class ComparisonExtensions {
   public static bool IsType<T>(this ISymbol symbol)

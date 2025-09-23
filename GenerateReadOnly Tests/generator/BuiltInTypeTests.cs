@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class BuiltInTypeTests {
   [Test]
@@ -19,7 +19,7 @@ internal class BuiltInTypeTests {
                                           bool needsToCast) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
 
@@ -56,7 +56,7 @@ internal class BuiltInTypeTests {
   public void TestDoesNotConvertBuiltInsForMutableProperties(string mutable) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
 
@@ -89,7 +89,7 @@ internal class BuiltInTypeTests {
   public void TestDoesNotConvertBuiltInsForMutableMethods(string mutable) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
 

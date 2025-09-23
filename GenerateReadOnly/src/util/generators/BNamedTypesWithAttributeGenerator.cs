@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using schema.generator.rules;
+using readOnly.generator.rules;
 
-namespace schema.util.generators;
+namespace readOnly.util.generators;
 
 public abstract class BNamedTypesWithAttributeGenerator<TAttribute>
     : IIncrementalGenerator where TAttribute : Attribute {

@@ -8,12 +8,12 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using NUnit.Framework;
 
-using schema.util.asserts;
+using readOnly.util.asserts;
 
 #pragma warning disable CS8604
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal static class ReadOnlyGeneratorTestUtil {
   public static CSharpCompilation Compilation =

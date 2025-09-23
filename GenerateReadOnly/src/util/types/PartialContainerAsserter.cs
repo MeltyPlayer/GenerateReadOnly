@@ -1,12 +1,13 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using schema.generator.rules;
-using schema.util.diagnostics;
-using schema.util.syntax;
+using readOnly.generator.rules;
+using readOnly.util.diagnostics;
+
+using readOnly.util.syntax;
 
 
-namespace schema.util.types.asserts;
+namespace readOnly.util.types.asserts;
 
 internal class PartialContainerAsserter {
   private readonly IDiagnosticReporter diagnosticReporter_;

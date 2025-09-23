@@ -1,14 +1,14 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class SameNameTests {
   [Test]
   public void TestSameName() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         

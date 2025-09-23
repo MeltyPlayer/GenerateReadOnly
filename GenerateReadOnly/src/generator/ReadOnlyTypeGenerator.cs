@@ -7,13 +7,13 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using schema.util.generators;
-using schema.util.symbols;
-using schema.util.text;
-using schema.util.types;
+using readOnly.util.generators;
+using readOnly.util.symbols;
+using readOnly.util.text;
+using readOnly.util.types;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 [AttributeUsage(AttributeTargets.Class |
                 AttributeTargets.Interface |

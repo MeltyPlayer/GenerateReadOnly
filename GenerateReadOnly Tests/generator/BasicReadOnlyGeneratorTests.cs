@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class BasicReadOnlyGeneratorTests {
   [Test]
@@ -16,7 +16,7 @@ internal class BasicReadOnlyGeneratorTests {
   public void TestEmpty(string emptySrc) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
 
@@ -57,7 +57,7 @@ internal class BasicReadOnlyGeneratorTests {
                              string readOnlyName) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $"""
-         using schema.readOnly;
+         using readOnly.generator;
 
          namespace foo.bar;
 
@@ -80,7 +80,7 @@ internal class BasicReadOnlyGeneratorTests {
   public void TestSimpleGenerics() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
 
@@ -110,7 +110,7 @@ internal class BasicReadOnlyGeneratorTests {
   public void TestKeywords() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace @const;
 

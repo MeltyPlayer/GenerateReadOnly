@@ -6,11 +6,11 @@ using System.Text;
 
 using Microsoft.CodeAnalysis;
 
-using schema.util.types;
-using schema.util.asserts;
+using readOnly.util.asserts;
+using readOnly.util.types;
 
 
-namespace schema.util.symbols;
+namespace readOnly.util.symbols;
 
 public static class SymbolTypeUtil {
   public static INamedTypeSymbol[] GetDeclaringTypesDownward(

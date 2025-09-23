@@ -3,7 +3,7 @@
     <IsRoslynComponent>true</IsRoslynComponent>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>preview</LangVersion>
-    <RootNamespace>schema</RootNamespace>
+    <RootNamespace>readOnly</RootNamespace>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -14,7 +14,7 @@
     <Description>Roslyn generator that automatically implements ReadOnly interfaces for annotated classes.</Description>
     <PackageId>GenerateReadOnly</PackageId>
     <Title>GenerateReadOnly</Title>
-    <Version>0.6.13</Version>
+    <Version>0.0.1</Version>
     <Authors>MeltyPlayer</Authors>
   </PropertyGroup>
 

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 
-namespace schema.util.asserts;
+namespace readOnly.util.asserts;
 
 public sealed class Asserts {
   /**

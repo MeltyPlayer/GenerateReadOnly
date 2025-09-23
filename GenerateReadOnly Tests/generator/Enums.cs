@@ -1,4 +1,4 @@
-﻿namespace schema.generator;
+﻿namespace readOnly.generator;
 
 internal enum SomeEnum {
   FOO = 123,

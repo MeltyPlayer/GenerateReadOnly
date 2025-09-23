@@ -6,10 +6,10 @@ using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using schema.util.asserts;
+using readOnly.util.asserts;
 
 
-namespace schema.util;
+namespace readOnly.util;
 
 public static class AttributeUtil {
   public static TAttribute Instantiate<TAttribute>(

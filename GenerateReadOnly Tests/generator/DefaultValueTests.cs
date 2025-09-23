@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class DefaultValueTests {
   [Test]
@@ -11,7 +11,7 @@ internal class DefaultValueTests {
   public void TestSupportsDefaultBools(string boolValue) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
           
@@ -45,7 +45,7 @@ internal class DefaultValueTests {
   public void TestSupportsDefaultInts(string intValue) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
           
@@ -78,7 +78,7 @@ internal class DefaultValueTests {
       TestSupportsDefaultEnums(string enumValue, string readonlyValue) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
           using foo.bar.other;
 
           namespace foo.bar.other {

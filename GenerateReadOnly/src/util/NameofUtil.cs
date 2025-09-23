@@ -3,10 +3,10 @@ using System.Linq;
 
 using Microsoft.CodeAnalysis;
 
-using schema.util.symbols;
+using readOnly.util.symbols;
 
 
-namespace schema.util;
+namespace readOnly.util;
 
 public static class NameofUtil {
   private struct TypeAndNamespace {

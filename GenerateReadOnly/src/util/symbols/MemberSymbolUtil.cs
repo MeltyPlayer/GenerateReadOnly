@@ -3,7 +3,7 @@
 using Microsoft.CodeAnalysis;
 
 
-namespace schema.util.symbols;
+namespace readOnly.util.symbols;
 
 public static class MemberSymbolUtil {
   public static bool IsPropertyGetter(this IMethodSymbol symbol,

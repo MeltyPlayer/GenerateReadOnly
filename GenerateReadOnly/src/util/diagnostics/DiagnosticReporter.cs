@@ -5,10 +5,10 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-using schema.generator.rules;
+using readOnly.generator.rules;
 
 
-namespace schema.util.diagnostics;
+namespace readOnly.util.diagnostics;
 
 internal class DiagnosticReporter : IDiagnosticReporter {
   private readonly ISymbol symbol_;

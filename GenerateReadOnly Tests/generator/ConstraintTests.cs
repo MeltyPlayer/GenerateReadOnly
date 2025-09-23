@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.generator;
+namespace readOnly.generator;
 
 internal class ConstraintTests {
   [Test]
@@ -15,7 +15,7 @@ internal class ConstraintTests {
   public void TestEachConstraintType(string constraint) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
-          using schema.readOnly;
+          using readOnly.generator;
 
           namespace foo.bar;
           
@@ -45,7 +45,7 @@ internal class ConstraintTests {
   public void TestCircularConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
 
@@ -82,7 +82,7 @@ internal class ConstraintTests {
   public void TestGenericSubConstraint() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         
@@ -116,7 +116,7 @@ internal class ConstraintTests {
   public void TestMultipleGenericConstraints() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using schema.readOnly;
+        using readOnly.generator;
 
         namespace foo.bar;
         

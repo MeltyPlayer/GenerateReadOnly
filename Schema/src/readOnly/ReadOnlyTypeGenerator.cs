@@ -32,8 +32,6 @@ public class KeepMutableTypeAttribute : Attribute;
 [Generator(LanguageNames.CSharp)]
 public class ReadOnlyTypeGenerator
     : BNamedTypesWithAttributeGenerator<GenerateReadOnlyAttribute> {
-  private static readonly TypeInfoParser parser_ = new();
-
   internal override bool FilterNamedTypesBeforeGenerating(
       TypeDeclarationSyntax syntax,
       INamedTypeSymbol symbol) => true;
@@ -63,7 +61,7 @@ public class ReadOnlyTypeGenerator
           var interfaceName = typeSymbol.GetConstInterfaceName();
 
           var constMembers
-              = parser_
+              = TypeInfoParser
                 .ParseMembers(typeSymbol)
                 .Where(parsedMember => {
                          var (parseStatus, memberSymbol) = parsedMember;
@@ -173,7 +171,7 @@ public class ReadOnlyTypeGenerator
       return true;
     }
 
-    foreach (var parsedMember in parser_.ParseMembers(
+    foreach (var parsedMember in TypeInfoParser.ParseMembers(
                  typeSymbol)) {
       var (parseStatus, memberSymbol) = parsedMember;
       if (parseStatus ==

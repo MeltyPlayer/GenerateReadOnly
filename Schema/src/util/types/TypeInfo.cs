@@ -10,23 +10,23 @@ using schema.util.symbols;
 
 namespace schema.util.types;
 
-public class TypeInfoParser {
+public static class TypeInfoParser {
   public enum ParseStatus {
     SUCCESS,
     NOT_A_FIELD_OR_PROPERTY_OR_METHOD,
     NOT_IMPLEMENTED,
   }
 
-  public IEnumerable<(ParseStatus, ISymbol)> ParseMembers(
+  public static IEnumerable<(ParseStatus, ISymbol)> ParseMembers(
       INamedTypeSymbol containerSymbol) {
     foreach (var memberSymbol in containerSymbol.GetInstanceMembers()) {
       // Tries to parse the type to get info about it
-      var parseStatus = this.ParseMember(memberSymbol);
+      var parseStatus = ParseMember(memberSymbol);
       yield return (parseStatus, memberSymbol);
     }
   }
 
-  public ParseStatus ParseMember(ISymbol memberSymbol) {
+  public static ParseStatus ParseMember(ISymbol memberSymbol) {
     if (memberSymbol is IMethodSymbol) {
       return ParseStatus.SUCCESS;
     }
@@ -44,43 +44,14 @@ public class TypeInfoParser {
       return ParseStatus.NOT_A_FIELD_OR_PROPERTY_OR_METHOD;
     }
 
-    return this.ParseTypeSymbol(memberTypeSymbol, isReadonly);
+    return ParseTypeSymbol(memberTypeSymbol, isReadonly);
   }
 
-  public ParseStatus ParseTypeSymbol(ITypeSymbol typeSymbol, bool isReadonly) {
-    this.ParseNullable_(ref typeSymbol);
+  public static ParseStatus ParseTypeSymbol(ITypeSymbol typeSymbol, bool isReadonly) {
+    ParseNullable_(ref typeSymbol);
 
-    if (typeSymbol.IsPrimitive(out var primitiveType)) {
-      switch (primitiveType) {
-        case SchemaPrimitiveType.BOOLEAN: {
-          return ParseStatus.SUCCESS;
-        }
-        case SchemaPrimitiveType.BYTE:
-        case SchemaPrimitiveType.SBYTE:
-        case SchemaPrimitiveType.INT16:
-        case SchemaPrimitiveType.UINT16:
-        case SchemaPrimitiveType.INT32:
-        case SchemaPrimitiveType.UINT32:
-        case SchemaPrimitiveType.INT64:
-        case SchemaPrimitiveType.UINT64: {
-          return ParseStatus.SUCCESS;
-        }
-        case SchemaPrimitiveType.SN8:
-        case SchemaPrimitiveType.UN8:
-        case SchemaPrimitiveType.SN16:
-        case SchemaPrimitiveType.UN16:
-        case SchemaPrimitiveType.SINGLE:
-        case SchemaPrimitiveType.DOUBLE: {
-          return ParseStatus.SUCCESS;
-        }
-        case SchemaPrimitiveType.CHAR: {
-          return ParseStatus.SUCCESS;
-        }
-        case SchemaPrimitiveType.ENUM: {
-          return ParseStatus.SUCCESS;
-        }
-        default: throw new ArgumentOutOfRangeException();
-      }
+    if (typeSymbol.IsPrimitive(out _)) {
+      return ParseStatus.SUCCESS;
     }
 
     if (typeSymbol.IsString()) {
@@ -88,7 +59,7 @@ public class TypeInfoParser {
     }
 
     if (typeSymbol.IsSequence(out var elementTypeV2, out var sequenceType)) {
-      var elementParseStatus = this.ParseTypeSymbol(
+      var elementParseStatus = ParseTypeSymbol(
           elementTypeV2,
           sequenceType.IsReadOnly());
       if (elementParseStatus != ParseStatus.SUCCESS) {
@@ -112,7 +83,7 @@ public class TypeInfoParser {
     return ParseStatus.NOT_IMPLEMENTED;
   }
 
-  private bool GetTypeOfMember_(
+  private static bool GetTypeOfMember_(
       ISymbol memberSymbol,
       out ITypeSymbol memberTypeSymbol,
       out bool isMemberReadonly) {
@@ -135,7 +106,7 @@ public class TypeInfoParser {
     }
   }
 
-  private void ParseNullable_(ref ITypeSymbol typeSymbol) {
+  private static void ParseNullable_(ref ITypeSymbol typeSymbol) {
     if (!typeSymbol.IsType(typeof(Nullable<>))) {
       return;
     }

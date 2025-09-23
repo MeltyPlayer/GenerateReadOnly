@@ -35,8 +35,6 @@ internal static class BinarySchemaTestUtil {
     var compilation = BinarySchemaTestUtil.Compilation.Clone()
                                           .AddSyntaxTrees(syntaxTree);
 
-    new BinarySchemaGenerator().PreprocessCompilation(compilation);
-
     var semanticModel = compilation.GetSemanticModel(syntaxTree);
 
     var structures = syntaxTree
@@ -196,40 +194,6 @@ internal static class BinarySchemaTestUtil {
 
     if (message.Length != 0) {
       Assert.Fail(message);
-    }
-  }
-
-  public static void AssertGenerated(string src,
-                                     string expectedReader,
-                                     string expectedWriter) {
-    var structure = BinarySchemaTestUtil.ParseFirst(src);
-    Assert.IsEmpty(structure.Diagnostics);
-
-    var actualReader = new BinarySchemaReaderGenerator().Generate(structure);
-    var actualWriter = new BinarySchemaWriterGenerator().Generate(structure);
-
-    Assert.AreEqual(expectedReader, actualReader.ReplaceLineEndings());
-    Assert.AreEqual(expectedWriter, actualWriter.ReplaceLineEndings());
-  }
-
-  public static void AssertGeneratedForAll(
-      string src,
-      params (string, string)[] expectedReadersAndWriters) {
-    var structures = BinarySchemaTestUtil.ParseAll(src).ToArray();
-    Assert.AreEqual(expectedReadersAndWriters.Length, structures.Length);
-    for (var i = 0; i < structures.Length; ++i) {
-      var (expectedReader, expectedWriter) = expectedReadersAndWriters[i];
-      var structure = structures[i];
-
-      Assert.IsEmpty(structure.Diagnostics);
-
-      var actualReader =
-          new BinarySchemaReaderGenerator().Generate(structure);
-      var actualWriter =
-          new BinarySchemaWriterGenerator().Generate(structure);
-
-      Assert.AreEqual(expectedReader, actualReader.ReplaceLineEndings());
-      Assert.AreEqual(expectedWriter, actualWriter.ReplaceLineEndings());
     }
   }
 }

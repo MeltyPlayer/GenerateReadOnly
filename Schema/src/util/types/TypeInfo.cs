@@ -98,7 +98,7 @@ public class TypeInfoParser {
       ITypeSymbol typeSymbol,
       bool isReadonly,
       out ITypeInfo typeInfo) {
-    this.ParseNullable_(ref typeSymbol, out var isNullable);
+    this.ParseNullable_(ref typeSymbol);
 
     if (typeSymbol.IsPrimitive(out var primitiveType)) {
       switch (primitiveType) {
@@ -147,7 +147,7 @@ public class TypeInfoParser {
       var elementParseStatus = this.ParseTypeSymbol(
           elementTypeV2,
           sequenceType.IsReadOnly(),
-          out var elementTypeInfo);
+          out _);
       if (elementParseStatus != ParseStatus.SUCCESS) {
         typeInfo = default;
         return elementParseStatus;
@@ -165,21 +165,7 @@ public class TypeInfoParser {
       return ParseStatus.SUCCESS;
     }
 
-    if (typeSymbol.IsGenericTypeParameter(out var typeParameterSymbol)) {
-      var constraintTypeInfos =
-          typeParameterSymbol
-              .ConstraintTypes
-              .Where(t => t is not IErrorTypeSymbol)
-              .Select(constraintType => {
-                        var parseStatus = this.ParseTypeSymbol(
-                            constraintType,
-                            isReadonly,
-                            out var constraintTypeInfo);
-                        Asserts.Equal(ParseStatus.SUCCESS, parseStatus);
-                        return constraintTypeInfo;
-                      })
-              .ToArray();
-
+    if (typeSymbol.IsGenericTypeParameter(out _)) {
       typeInfo = new GenericTypeInfo();
       return ParseStatus.SUCCESS;
     }
@@ -221,16 +207,13 @@ public class TypeInfoParser {
     }
   }
 
-  private void ParseNullable_(ref ITypeSymbol typeSymbol,
-                              out bool isNullable) {
-    isNullable = false;
-    if (typeSymbol.IsType(typeof(Nullable<>))) {
-      Asserts.True(typeSymbol.IsGeneric(out _, out var genericArguments));
-      typeSymbol = genericArguments.ToArray()[0];
-      isNullable = true;
-    } else if (typeSymbol.IsNullable(out _)) {
-      isNullable = true;
+  private void ParseNullable_(ref ITypeSymbol typeSymbol) {
+    if (!typeSymbol.IsType(typeof(Nullable<>))) {
+      return;
     }
+
+    Asserts.True(typeSymbol.IsGeneric(out _, out var genericArguments));
+    typeSymbol = genericArguments.ToArray()[0];
   }
 
   private record BoolTypeInfo : IBoolTypeInfo;

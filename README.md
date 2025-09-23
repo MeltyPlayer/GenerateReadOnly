@@ -8,7 +8,7 @@
 
 ## Overview
 
-Roslyn generator that automatically implements ReadOnly interfaces for annotated types.
+Roslyn generator that automatically sets up ReadOnly interfaces for annotated types.
 
 ## Background
 

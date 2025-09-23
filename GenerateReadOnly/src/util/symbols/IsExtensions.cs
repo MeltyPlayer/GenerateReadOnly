@@ -123,36 +123,29 @@ public static class IsExtensions {
     return false;
   }
 
-  public static bool IsSequence(this ISymbol symbol,
-                                out ITypeSymbol elementType,
-                                out SequenceType sequenceType) {
+  public static bool IsSequence(this ISymbol symbol, out ITypeSymbol elementType) {
     if (symbol.IsArray(out elementType)) {
-      sequenceType = SequenceType.MUTABLE_ARRAY;
       return true;
     }
 
     if (symbol.Implements(typeof(ImmutableArray<>),
                           out var immutableArrayTypeV2)) {
       elementType = immutableArrayTypeV2.TypeArguments.ToArray()[0];
-      sequenceType = SequenceType.IMMUTABLE_ARRAY;
       return true;
     }
 
     if (symbol.Implements(typeof(List<>), out var listTypeV2)) {
       elementType = listTypeV2.TypeArguments.ToArray()[0];
-      sequenceType = SequenceType.MUTABLE_LIST;
       return true;
     }
 
     if (symbol.Implements(typeof(IReadOnlyList<>),
                           out var readonlyListTypeV2)) {
       elementType = readonlyListTypeV2.TypeArguments.ToArray()[0];
-      sequenceType = SequenceType.READ_ONLY_LIST;
       return true;
     }
 
     elementType = default;
-    sequenceType = default;
     return false;
   }
 }

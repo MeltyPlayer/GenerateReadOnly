@@ -576,6 +576,12 @@ internal static class ReadOnlyTypeGeneratorUtil {
       return true;
     }
 
+    if (symbol.IsType(typeof(IDictionary<,>))) {
+      readOnlyName = typeof(IReadOnlyDictionary<,>).GetCorrectName();
+      canImplicitlyConvert = false;
+      return true;
+    }
+
     readOnlyName = default;
     canImplicitlyConvert = false;
     return false;

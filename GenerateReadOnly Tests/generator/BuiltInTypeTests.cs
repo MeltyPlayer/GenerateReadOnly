@@ -13,6 +13,9 @@ internal class BuiltInTypeTests {
   [TestCase("System.Collections.Generic.IList<int>",
             "System.Collections.Generic.IReadOnlyList<int>",
             true)]
+  [TestCase("System.Collections.Generic.IDictionary<int, int>",
+            "System.Collections.Generic.IReadOnlyDictionary<int, int>",
+            true)]
   public void TestSupportsEachBuiltInType(string mutable,
                                           string readOnly,
                                           bool needsToCast) {
@@ -51,6 +54,7 @@ internal class BuiltInTypeTests {
   [TestCase("System.Span<int>")]
   [TestCase("System.Collections.Generic.ICollection<int>")]
   [TestCase("System.Collections.Generic.IList<int>")]
+  [TestCase("System.Collections.Generic.IDictionary<int, int>")]
   public void TestDoesNotConvertBuiltInsForMutableProperties(string mutable) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""
@@ -84,6 +88,7 @@ internal class BuiltInTypeTests {
   [TestCase("System.Span<int>")]
   [TestCase("System.Collections.Generic.ICollection<int>")]
   [TestCase("System.Collections.Generic.IList<int>")]
+  [TestCase("System.Collections.Generic.IDictionary<int, int>")]
   public void TestDoesNotConvertBuiltInsForMutableMethods(string mutable) {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         $$"""

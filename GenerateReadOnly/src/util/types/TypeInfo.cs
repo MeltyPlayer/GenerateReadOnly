@@ -32,10 +32,7 @@ public static class TypeInfoParser {
       return ParseStatus.SUCCESS;
     }
 
-    if (!GetTypeOfMember_(
-            memberSymbol,
-            out var memberTypeSymbol,
-            out var isReadonly)) {
+    if (!GetTypeOfMember_(memberSymbol, out var memberTypeSymbol)) {
       return ParseStatus.NOT_A_FIELD_OR_PROPERTY_OR_METHOD;
     }
 
@@ -45,10 +42,10 @@ public static class TypeInfoParser {
       return ParseStatus.NOT_A_FIELD_OR_PROPERTY_OR_METHOD;
     }
 
-    return ParseTypeSymbol(memberTypeSymbol, isReadonly);
+    return ParseTypeSymbol(memberTypeSymbol);
   }
 
-  public static ParseStatus ParseTypeSymbol(ITypeSymbol typeSymbol, bool isReadonly) {
+  public static ParseStatus ParseTypeSymbol(ITypeSymbol typeSymbol) {
     ParseNullable_(ref typeSymbol);
 
     if (typeSymbol.IsPrimitive(out _)) {
@@ -59,10 +56,8 @@ public static class TypeInfoParser {
       return ParseStatus.SUCCESS;
     }
 
-    if (typeSymbol.IsSequence(out var elementTypeV2, out var sequenceType)) {
-      var elementParseStatus = ParseTypeSymbol(
-          elementTypeV2,
-          sequenceType.IsReadOnly());
+    if (typeSymbol.IsSequence(out var elementTypeV2)) {
+      var elementParseStatus = ParseTypeSymbol(elementTypeV2);
       if (elementParseStatus != ParseStatus.SUCCESS) {
         return elementParseStatus;
       }
@@ -86,21 +81,17 @@ public static class TypeInfoParser {
 
   private static bool GetTypeOfMember_(
       ISymbol memberSymbol,
-      out ITypeSymbol memberTypeSymbol,
-      out bool isMemberReadonly) {
+      out ITypeSymbol memberTypeSymbol) {
     switch (memberSymbol) {
       case IPropertySymbol propertySymbol: {
-        isMemberReadonly = propertySymbol.SetMethod == null;
         memberTypeSymbol = propertySymbol.Type;
         return true;
       }
       case IFieldSymbol fieldSymbol: {
-        isMemberReadonly = fieldSymbol.IsReadOnly;
         memberTypeSymbol = fieldSymbol.Type;
         return true;
       }
       default: {
-        isMemberReadonly = false;
         memberTypeSymbol = default;
         return false;
       }

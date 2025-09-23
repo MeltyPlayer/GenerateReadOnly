@@ -6,10 +6,8 @@ using System.Text;
 
 using Microsoft.CodeAnalysis;
 
-using schema.binary;
 using schema.util.types;
 using schema.util.asserts;
-using schema.util.diagnostics;
 
 
 namespace schema.util.symbols;

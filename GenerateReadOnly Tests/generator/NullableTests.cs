@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 
 
-namespace schema.readOnly;
+namespace schema.generator;
 
 internal class NullableTests {
   [Test]

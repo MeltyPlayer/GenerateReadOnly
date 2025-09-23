@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
 
-using schema.readOnly;
-
 
 namespace readOnly;
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using schema.binary;
 using schema.util.diagnostics;
 using schema.util.syntax;
 

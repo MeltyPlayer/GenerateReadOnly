@@ -1,7 +1,4 @@
-﻿using schema.readOnly;
-
-
-namespace readOnly;
+﻿namespace readOnly;
 
 [GenerateReadOnly]
 public partial interface IFooBar {

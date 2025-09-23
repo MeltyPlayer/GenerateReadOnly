@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
-using schema.readOnly;
-
 
 namespace readOnly;
 

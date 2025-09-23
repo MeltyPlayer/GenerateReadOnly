@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using schema.binary;
-
 namespace schema.util.generators;
 
 public abstract class BNamedTypesWithAttributeGenerator<TAttribute>

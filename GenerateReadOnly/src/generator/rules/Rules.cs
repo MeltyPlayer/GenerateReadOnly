@@ -4,10 +4,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-using schema.readOnly;
-
-
-namespace schema.binary;
+namespace schema.generator.rules;
 
 public static partial class Rules {
   private static int diagnosticId_ = 0;

@@ -13,7 +13,7 @@ using schema.util.text;
 using schema.util.types;
 
 
-namespace schema.readOnly;
+namespace schema.generator;
 
 [AttributeUsage(AttributeTargets.Class |
                 AttributeTargets.Interface |

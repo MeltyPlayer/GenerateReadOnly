@@ -1,4 +1,4 @@
-﻿namespace schema.readOnly;
+﻿namespace schema.generator;
 
 [GenerateReadOnly]
 public partial interface IValue;

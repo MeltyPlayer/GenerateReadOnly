@@ -14,7 +14,7 @@
     <Description>Roslyn generator that automatically implements ReadOnly interfaces for annotated types.</Description>
     <PackageId>GenerateReadOnly</PackageId>
     <Title>GenerateReadOnly</Title>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Authors>MeltyPlayer</Authors>
   </PropertyGroup>
 

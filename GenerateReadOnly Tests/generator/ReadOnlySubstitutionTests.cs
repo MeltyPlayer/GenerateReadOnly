@@ -288,8 +288,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteIndexerParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -319,8 +320,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteMutableIndexerParameters() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -350,8 +352,9 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesProperties() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
-
+        
         namespace foo.bar;
         
         [GenerateReadOnly]
@@ -469,6 +472,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesGenericProperty() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
         using System.Collections.Generic;
 
@@ -501,6 +505,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestSubstitutesGenericIndexer() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
         using System.Collections.Generic;
 
@@ -533,6 +538,7 @@ internal class ReadOnlySubstitutionTests {
   public void TestDoesNotSubstituteGenericIndexerParameter() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
+        using readOnly;
         using readOnly.generator;
         using System.Collections.Generic;
 

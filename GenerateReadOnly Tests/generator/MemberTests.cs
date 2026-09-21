@@ -304,7 +304,7 @@ internal class MemberTests {
   public void TestNamelessTuple() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;
@@ -335,7 +335,7 @@ internal class MemberTests {
   public void TestNamedTuple() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         using System.Collections.Generic;
 
         namespace foo.bar;

@@ -8,7 +8,7 @@ internal class NullableTests {
   public void TestSupportsNullablePrimitiveProperties() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
         
         namespace foo.bar;
 
@@ -38,7 +38,7 @@ internal class NullableTests {
   public void TestSupportsNullableGenericProperties() {
     ReadOnlyGeneratorTestUtil.AssertGenerated(
         """
-        using readOnly.generator;
+        using readOnly;
 
         namespace foo.bar;
         

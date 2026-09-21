@@ -47,13 +47,13 @@ internal class BuiltInTypeTests {
           namespace foo.bar;
 
           public partial interface IWrapper : IReadOnlyWrapper {
-            {{readOnly}} IReadOnlyWrapper.Property => {{(needsToCast ? $"({readOnly})(object) " : "")}}Property;
             {{readOnly}} IReadOnlyWrapper.Convert({{mutable}} value) => {{(needsToCast ? $"({readOnly})(object) " : "")}}Convert(value);
+            {{readOnly}} IReadOnlyWrapper.Property => {{(needsToCast ? $"({readOnly})(object) " : "")}}Property;
           }
 
           public partial interface IReadOnlyWrapper {
-            public {{readOnly}} Property { get; }
             public {{readOnly}} Convert({{mutable}} value);
+            public {{readOnly}} Property { get; }
           }
 
           """);

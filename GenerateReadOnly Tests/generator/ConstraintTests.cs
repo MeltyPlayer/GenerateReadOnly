@@ -66,8 +66,8 @@ internal class ConstraintTests {
         namespace foo.bar;
         
         public partial interface ICircular<TMutable, TReadOnly, TImpl> : IReadOnlyCircular<TMutable, TReadOnly, TImpl> {
-          TMutable IReadOnlyCircular<TMutable, TReadOnly, TImpl>.Foo(TReadOnly other) => Foo(other);
           TMutable IReadOnlyCircular<TMutable, TReadOnly, TImpl>.Foo(in TImpl other) => Foo(in other);
+          TMutable IReadOnlyCircular<TMutable, TReadOnly, TImpl>.Foo(TReadOnly other) => Foo(other);
         }
         
         public partial interface IReadOnlyCircular<TMutable, TReadOnly, TImpl> where TMutable : ICircular<TMutable, TReadOnly, TImpl>, TReadOnly where TReadOnly : IReadOnlyCircular<TMutable, TReadOnly, TImpl> {
@@ -100,13 +100,13 @@ internal class ConstraintTests {
         namespace foo.bar;
         
         public partial class SubConstraint<T1, T2> : IReadOnlySubConstraint<T1, T2> {
-          T1 IReadOnlySubConstraint<T1, T2>.Foo<S>(S s) => Foo<S>(s);
           T2 IReadOnlySubConstraint<T1, T2>.Bar => Bar;
+          T1 IReadOnlySubConstraint<T1, T2>.Foo<S>(S s) => Foo<S>(s);
         }
         
         public partial interface IReadOnlySubConstraint<T1, out T2> where T2 : T1 {
-          public T1 Foo<S>(S s) where S : T1;
           public T2 Bar { get; }
+          public T1 Foo<S>(S s) where S : T1;
         }
 
         """);
@@ -134,13 +134,13 @@ internal class ConstraintTests {
         namespace foo.bar;
         
         public partial class SimpleAttributes<T1, T2> : IReadOnlySimpleAttributes<T1, T2> {
-          T1 IReadOnlySimpleAttributes<T1, T2>.Foo<T3, T4>(T1 t1, T2 t2, T3 t3, T4 t4) => Foo<T3, T4>(t1, t2, t3, t4);
           T2 IReadOnlySimpleAttributes<T1, T2>.Bar => Bar;
+          T1 IReadOnlySimpleAttributes<T1, T2>.Foo<T3, T4>(T1 t1, T2 t2, T3 t3, T4 t4) => Foo<T3, T4>(t1, t2, t3, t4);
         }
         
         public partial interface IReadOnlySimpleAttributes<T1, T2> where T1 : notnull, struct where T2 : unmanaged {
-          public T1 Foo<T3, T4>(T1 t1, T2 t2, T3 t3, T4 t4) where T3 : class where T4 : class?;
           public T2 Bar { get; }
+          public T1 Foo<T3, T4>(T1 t1, T2 t2, T3 t3, T4 t4) where T3 : class where T4 : class?;
         }
 
         """);

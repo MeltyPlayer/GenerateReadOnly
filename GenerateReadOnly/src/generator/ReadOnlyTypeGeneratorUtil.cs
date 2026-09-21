@@ -264,7 +264,7 @@ internal static class ReadOnlyTypeGeneratorUtil {
 
   public static string GetGenericParametersWithVarianceForReadOnlyVersion(
       this INamedTypeSymbol symbol,
-      IReadOnlyList<IMethodSymbol> constMembers) {
+      IReadOnlyList<ISymbol> constMembers) {
     var typeParameters = symbol.TypeParameters;
     if (typeParameters.Length == 0) {
       return "";

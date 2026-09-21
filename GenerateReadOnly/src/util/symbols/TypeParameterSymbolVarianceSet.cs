@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 using Microsoft.CodeAnalysis;
 
@@ -50,7 +51,7 @@ public class TypeParameterSymbolVarianceSet
   public TypeParameterSymbolVarianceSet(
       IEnumerable<ITypeParameterSymbol> containerTypeParameterSymbols,
       IEnumerable<INamedTypeSymbol> parentTypes,
-      IReadOnlyList<IMethodSymbol> constMembers) {
+      IReadOnlyList<ISymbol> constMembers) {
     var knownContainerTypeParameterSymbols
         = new HashSet<ITypeSymbol>(containerTypeParameterSymbols,
                                    SymbolEqualityComparer.Default);
@@ -75,11 +76,28 @@ public class TypeParameterSymbolVarianceSet
     var visitedParameterTypeSymbols
         = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
     foreach (var constMember in constMembers) {
-      this.VisitReturnTypeSymbol_(constMember.ReturnType,
+      ITypeSymbol returnType;
+      ImmutableArray<IParameterSymbol> parameters;
+      switch (constMember) {
+        case IPropertySymbol propertySymbol: {
+          returnType = propertySymbol.Type;
+          parameters = propertySymbol.Parameters;
+          break;
+        }
+        case IMethodSymbol methodSymbol: {
+          returnType = methodSymbol.ReturnType;
+          parameters = methodSymbol.Parameters;
+          break;
+        }
+        default:
+          throw new NotImplementedException();
+      }
+
+      this.VisitReturnTypeSymbol_(returnType,
                                   visitedReturnTypeSymbols,
                                   knownContainerTypeParameterSymbols);
 
-      foreach (var parameter in constMember.Parameters) {
+      foreach (var parameter in parameters) {
         this.VisitParameterTypeSymbol_(parameter.Type,
                                        visitedParameterTypeSymbols,
                                        knownContainerTypeParameterSymbols);

@@ -26,13 +26,13 @@ internal class KeywordTests {
         namespace @const;
 
         public partial class @void<@double> : IReadOnlyvoid<@double> {
-          @void IReadOnlyvoid<@double>.@int<@short>(@void @bool) => @int<@short>(@bool);
           @void IReadOnlyvoid<@double>.@float => @float;
+          @void IReadOnlyvoid<@double>.@int<@short>(@void @bool) => @int<@short>(@bool);
         }
 
         public partial interface IReadOnlyvoid<out @double> where @double : struct {
-          public @void @int<@short>(@void @bool) where @short : @void;
           public @void @float { get; }
+          public @void @int<@short>(@void @bool) where @short : @void;
         }
 
         """);

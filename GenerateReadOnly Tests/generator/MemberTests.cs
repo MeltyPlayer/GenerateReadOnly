@@ -257,13 +257,13 @@ internal class MemberTests {
         namespace foo.bar;
         
         public partial interface IWrapper : IReadOnlyWrapper {
-          int? IReadOnlyWrapper.Foo(int? bar) => Foo(bar);
           int? IReadOnlyWrapper.Bar => Bar;
+          int? IReadOnlyWrapper.Foo(int? bar) => Foo(bar);
         }
         
         public partial interface IReadOnlyWrapper {
-          public int? Foo(int? bar);
           public int? Bar { get; }
+          public int? Foo(int? bar);
         }
 
         """);

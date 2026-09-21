@@ -40,6 +40,40 @@ internal static class ReadOnlyTypeGeneratorUtil {
         null,
         r => GetNamespaceOfType(r, semanticModel, sourceDeclarationSyntax));
 
+  public static string GetGenericsFromCurrentSymbol(
+      this ITypeSymbol sourceSymbol,
+      ITypeSymbol referencedSymbol,
+      SemanticModel semanticModel,
+      TypeDeclarationSyntax sourceDeclarationSyntax) {
+    var sb = new StringBuilder();
+    sb.AppendGenericArgumentsFor(
+        sourceSymbol,
+        referencedSymbol,
+        null,
+        r => GetNamespaceOfType(
+            r,
+            semanticModel,
+            sourceDeclarationSyntax)!);
+    return sb.ToString();
+  }
+
+  public static string GetGenericsOrReadOnlyFromCurrentSymbol(
+      this ITypeSymbol sourceSymbol,
+      ITypeSymbol referencedSymbol,
+      SemanticModel semanticModel,
+      TypeDeclarationSyntax sourceDeclarationSyntax) {
+    var sb = new StringBuilder();
+    sb.AppendGenericArgumentsFor(
+        sourceSymbol,
+        referencedSymbol,
+        ConvertName_,
+        r => GetNamespaceOfType(
+            r,
+            semanticModel,
+            sourceDeclarationSyntax)!);
+    return sb.ToString();
+  }
+
   public static string GetTypeConstraintsOrReadonly(
       this ITypeSymbol sourceSymbol,
       IReadOnlyList<ITypeParameterSymbol> typeParameters,
@@ -343,46 +377,5 @@ internal static class ReadOnlyTypeGeneratorUtil {
     return symbol.HasBuiltInReadOnlyType_(out _,
                                           out var canImplicitlyConvert) &&
            !canImplicitlyConvert;
-  }
-
-  public static IEnumerable<IMethodSymbol> GetConstMembers(
-      this INamedTypeSymbol typeSymbol) {
-    if (!typeSymbol.HasAttribute<GenerateReadOnlyAttribute>()) {
-      return [];
-    }
-
-    return TypeInfoParser
-           .ParseMembers(typeSymbol)
-           .Where(parsedMember => {
-                    var (parseStatus, memberSymbol) = parsedMember;
-                    if (parseStatus ==
-                        TypeInfoParser.ParseStatus
-                                      .NOT_A_FIELD_OR_PROPERTY_OR_METHOD) {
-                      return false;
-                    }
-
-                    if (memberSymbol.DeclaredAccessibility is not (
-                        Accessibility.Public
-                        or Accessibility.Internal)) {
-                      return false;
-                    }
-
-                    if (memberSymbol is IFieldSymbol) {
-                      return false;
-                    }
-
-                    if (memberSymbol is IPropertySymbol) {
-                      return false;
-                    }
-
-                    if (memberSymbol is IMethodSymbol &&
-                        !memberSymbol.Name.StartsWith("get_") &&
-                        !memberSymbol.HasAttribute<ConstAttribute>()) {
-                      return false;
-                    }
-
-                    return true;
-                  })
-           .Select(parsedMember => (IMethodSymbol) parsedMember.Item2);
   }
 }

@@ -44,17 +44,18 @@ internal static class MembersUtil {
 
   public static IEnumerable<ISymbol> WhereApplicableForConst(
       this IEnumerable<ISymbol> enumerable)
-    => enumerable
-        .Where(e => {
-                 if (e is IPropertySymbol { GetMethod: { } }) {
-                   return true;
-                 }
+    => enumerable.Where(IsApplicableForConst);
 
-                 if (e is IMethodSymbol methodSymbol &&
-                     methodSymbol.HasAttribute<ConstAttribute>()) {
-                   return true;
-                 }
+  public static bool IsApplicableForConst(this ISymbol e) {
+    if (e is IPropertySymbol { GetMethod: { } }) {
+      return true;
+    }
 
-                 return false;
-               });
+    if (e is IMethodSymbol methodSymbol &&
+        methodSymbol.HasAttribute<ConstAttribute>()) {
+      return true;
+    }
+
+    return false;
+  }
 }

@@ -3,7 +3,7 @@
 public static class SourceWriterExtensions {
   public static ISourceWriter EnterBlock(this ISourceWriter sw,
                                          string prefix = "") {
-    if (prefix.Length > 0) {
+    if (prefix.Length > 0 && !prefix.EndsWith(" ")) {
       prefix = $"{prefix} ";
     }
 

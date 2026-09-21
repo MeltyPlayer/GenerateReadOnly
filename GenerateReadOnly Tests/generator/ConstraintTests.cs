@@ -66,8 +66,8 @@ internal class ConstraintTests {
         namespace foo.bar;
         
         public partial interface ICircular<TMutable, TReadOnly, TImpl> : IReadOnlyCircular<TMutable, TReadOnly, TImpl> {
-          TMutable IReadOnlyCircular<TMutable, TReadOnly, TImpl>.Foo(in TImpl other) => Foo(in other);
           TMutable IReadOnlyCircular<TMutable, TReadOnly, TImpl>.Foo(TReadOnly other) => Foo(other);
+          TMutable IReadOnlyCircular<TMutable, TReadOnly, TImpl>.Foo(in TImpl other) => Foo(in other);
         }
         
         public partial interface IReadOnlyCircular<TMutable, TReadOnly, TImpl> where TMutable : ICircular<TMutable, TReadOnly, TImpl>, TReadOnly where TReadOnly : IReadOnlyCircular<TMutable, TReadOnly, TImpl> {

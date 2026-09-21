@@ -181,11 +181,23 @@ public class ReadOnlyTypeGenerator
               var trueOverlapMembers
                   = overlapMembers
                     .GetPairs()
-                    .Where(p =>  p.value.Count > 1 &&
-                                    (p.value.Any(t => t.source == typeSymbol) ||
-                                     p.value.Select(t => (t.source, t.generics)).Distinct().Count() > 1))
-                    .OrderBy(p => p.key)
-                    .Select(p => p.value)
+                    .Select(kvp => {
+                              var set = kvp.value;
+                              var hasSelf
+                                  = set.Any(t => t.source == typeSymbol);
+
+                              var keepType = set.Count > 1 &&
+                                             (hasSelf ||
+                                              set.Select(t => (t.source,
+                                                   t.generics))
+                                                 .Distinct()
+                                                 .Count() >
+                                              1);
+
+                              return (kvp, hasSelf, keepType);
+                            })
+                    .Where(t => t.keepType)
+                    .OrderBy(t => t.kvp.key)
                     .ToArray();
 
               if (trueOverlapMembers.Length == 0) {
@@ -193,11 +205,30 @@ public class ReadOnlyTypeGenerator
               } else {
                 sw.EnterBlock(blockPrefix);
 
-                foreach (var overlapMember in trueOverlapMembers) {
+                foreach (var (kvp, hasSelf, _) in trueOverlapMembers) {
+                  var (_, overlapMember) = kvp;
+
+                  if (!hasSelf) {
+                    var nonConstProperties
+                        = overlapMember.Where(t => t is {
+                                           makeConst: false,
+                                           propertyOrMethod: IPropertySymbol
+                                       })
+                                       .ToArray();
+
+                    if (nonConstProperties.Length > 0) {
+                      /*WriteMember_(sw,
+                                   typeSymbol,
+                                   nonConstProperties[0].propertyOrMethod,
+                                   false,
+                                   semanticModel,
+                                   syntax);*/
+                    }
+                  }
+
                   foreach (var (isSelf, _, makeConst, fullyQualifiedParentName, _,
                                memberSymbol) in
-                           overlapMember
-                               .OrderBy(m => m.fullyQualifiedParentName)) {
+                           overlapMember.OrderBy(m => m.fullyQualifiedParentName)) {
                     if (isSelf) {
                       continue;
                     }
@@ -384,29 +415,65 @@ public class ReadOnlyTypeGenerator
         if (interfaceName == null) {
           sw.WriteLine(" { get; }");
         } else {
-          sw.Write(" => ")
-            .Write(typeSymbol.GetCStyleCastToReadOnlyIfNeeded(
-                       memberSymbol,
-                       returnType,
-                       semanticModel,
-                       syntax))
-            .Write(propertyAccessName);
+          var getOnly = makeConst || propertySymbol.SetMethod == null;
 
-          if (isIndexer) {
-            sw.Write("[");
-            for (var i = 0; i < indexerParameterSymbols.Length; ++i) {
-              if (i > 0) {
-                sw.Write(", ");
-              }
-
-              var parameterSymbol = indexerParameterSymbols[i];
-              sw.Write(parameterSymbol.Name.EscapeKeyword());
-            }
-
-            sw.Write("]");
+          if (!getOnly) {
+            sw.EnterBlock(" ");
           }
 
-          sw.WriteLine(";");
+          if (propertySymbol.GetMethod != null) {
+            if (!getOnly) {
+              sw.Write("get");
+            }
+
+            sw.Write(" => ")
+              .Write(typeSymbol.GetCStyleCastToReadOnlyIfNeeded(
+                         memberSymbol,
+                         returnType,
+                         semanticModel,
+                         syntax))
+              .Write(propertyAccessName);
+
+            if (isIndexer) {
+              sw.Write("[");
+              for (var i = 0; i < indexerParameterSymbols.Length; ++i) {
+                if (i > 0) {
+                  sw.Write(", ");
+                }
+
+                var parameterSymbol = indexerParameterSymbols[i];
+                sw.Write(parameterSymbol.Name.EscapeKeyword());
+              }
+
+              sw.Write("]");
+            }
+
+            sw.WriteLine(";");
+          }
+          if (!getOnly && propertySymbol.SetMethod != null) {
+            sw.Write("set => ")
+              .Write(propertyAccessName);
+
+            if (isIndexer) {
+              sw.Write("[");
+              for (var i = 0; i < indexerParameterSymbols.Length; ++i) {
+                if (i > 0) {
+                  sw.Write(", ");
+                }
+
+                var parameterSymbol = indexerParameterSymbols[i];
+                sw.Write(parameterSymbol.Name.EscapeKeyword());
+              }
+
+              sw.Write("]");
+            }
+
+            sw.WriteLine(" = value;");
+          }
+
+          if (!getOnly) {
+            sw.ExitBlock();
+          }
         }
 
         break;

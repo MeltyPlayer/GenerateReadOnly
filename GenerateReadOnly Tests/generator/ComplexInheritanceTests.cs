@@ -48,7 +48,10 @@ internal class ComplexInheritanceTests {
 
         public partial interface ITopType : IReadOnlyTopType {
           IReadOnlyTopType IReadOnlyTopType<IReadOnlyTopType>.Data => Data;
-          ITopType ITopType<ITopType>.Data => Data;
+          ITopType ITopType<ITopType>.Data {
+            get => Data;
+            set => Data = value;
+          }
         }
 
         public partial interface IReadOnlyTopType : IReadOnlyTopType<IReadOnlyTopType>;
@@ -61,7 +64,10 @@ internal class ComplexInheritanceTests {
 
         public partial interface IChildType : IReadOnlyChildType {
           IReadOnlyChildType IReadOnlyTopType<IReadOnlyChildType>.Data => Data;
-          IChildType ITopType<IChildType>.Data => Data;
+          IChildType ITopType<IChildType>.Data {
+            get => Data;
+            set => Data = value;
+          }
         }
 
         public partial interface IReadOnlyChildType : IReadOnlyTopType, IReadOnlyTopType<IReadOnlyChildType>;

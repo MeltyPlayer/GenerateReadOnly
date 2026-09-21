@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +8,7 @@ namespace readOnly.data;
 ///   An implementation for a dictionary of sets. Each value added for a key
 ///   will be stored in that key's corresponding set.
 /// </summary>
-public sealed class SetDictionary<TKey, TValue>(
+internal sealed class SetDictionary<TKey, TValue>(
     ConcurrentDictionary<TKey, ISet<TValue>> impl) {
   public SetDictionary() : this(
       new ConcurrentDictionary<TKey, ISet<TValue>>()) { }

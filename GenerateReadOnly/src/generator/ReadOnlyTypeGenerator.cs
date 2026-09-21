@@ -36,9 +36,11 @@ public class ReadOnlyTypeGenerator
                       syntax));
   }
 
-  private class MemberNameAndTypeAndParameters : IComparable<MemberNameAndTypeAndParameters> {
+  private class MemberNameAndTypeAndParameters
+      : IComparable<MemberNameAndTypeAndParameters> {
     public static MemberNameAndTypeAndParameters From(ISymbol memberSymbol)
       => new() {
+          OriginalSymbol = memberSymbol.OriginalDefinition,
           Name = memberSymbol.Name,
           Type = memberSymbol switch {
               IMethodSymbol methodSymbol     => methodSymbol.ReturnType,
@@ -50,18 +52,19 @@ public class ReadOnlyTypeGenerator
           },
       };
 
+    private ISymbol OriginalSymbol { get; set; }
     private string Name { get; set; }
     private ITypeSymbol Type { get; set; }
     private ImmutableArray<IParameterSymbol> Parameters { get; set; }
+
+    public override int GetHashCode() => this.OriginalSymbol.GetHashCode();
 
     public override bool Equals(object? otherObj) {
       if (otherObj is not MemberNameAndTypeAndParameters other) {
         return false;
       }
 
-      return this.Name == other.Name &&
-             this.Type == other.Type &&
-             this.Parameters.SequenceEqual(other.Parameters);
+      return this.OriginalSymbol == other.OriginalSymbol;
     }
 
     public int CompareTo(MemberNameAndTypeAndParameters? other) {
@@ -121,7 +124,7 @@ public class ReadOnlyTypeGenerator
             foreach (var (isSelf, parentType) in (true, typeSymbol)
                                                  .Yield()
                                                  .Concat(
-                                                     GetDirectBaseTypeAndInterfaces_(
+                                                     GetAllParentTypes_(
                                                              typeSymbol)
                                                          .Select(t => (
                                                              false, t)))) {
@@ -134,7 +137,8 @@ public class ReadOnlyTypeGenerator
                           syntax);
               var parentReadOnlyInterfaceFullyQualifiedName =
                   isSelf
-                      ? myReadOnlyInterfaceName + typeSymbol.GetGenericParameters()
+                      ? myReadOnlyInterfaceName +
+                        typeSymbol.GetGenericParameters()
                       : typeSymbol
                           .GetQualifiedNameAndGenericsOrReadOnlyFromCurrentSymbol(
                               parentType,
@@ -158,12 +162,14 @@ public class ReadOnlyTypeGenerator
 
                 overlapMembers.Add(
                     key,
-                    (isSelf, parentType, false, parentFullyQualifiedName, generics, parentMember));
+                    (isSelf, parentType, false, parentFullyQualifiedName,
+                     generics, parentMember));
 
                 if (parentMember.IsApplicableForConst()) {
                   overlapMembers.Add(
                       key,
-                      (false, parentType, true, parentReadOnlyInterfaceFullyQualifiedName, 
+                      (false, parentType, true,
+                       parentReadOnlyInterfaceFullyQualifiedName,
                        readOnlyGenerics,
                        parentMember));
                 }
@@ -214,21 +220,66 @@ public class ReadOnlyTypeGenerator
                                            makeConst: false,
                                            propertyOrMethod: IPropertySymbol
                                        })
+                                       .OrderByDescending(p => (p.propertyOrMethod as IPropertySymbol)!.Type.AllInterfaces.Length)
                                        .ToArray();
 
                     if (nonConstProperties.Length > 0) {
-                      /*WriteMember_(sw,
-                                   typeSymbol,
-                                   nonConstProperties[0].propertyOrMethod,
-                                   false,
-                                   semanticModel,
-                                   syntax);*/
+                      var propertySymbol
+                          = (nonConstProperties[0].propertyOrMethod as
+                              IPropertySymbol)!;
+
+                      if (!typeSymbol.IsInterface()) {
+                        sw.Write(SymbolTypeUtil.AccessibilityToModifier(
+                                     typeSymbol.DeclaredAccessibility))
+                          .Write(" ");
+                      }
+
+                      sw.Write(typeSymbol
+                                   .GetQualifiedNameAndGenericsFromCurrentSymbol(
+                                       propertySymbol.Type,
+                                       semanticModel,
+                                       syntax,
+                                       propertySymbol))
+                        .Write(" ");
+
+                      var isIndexer = propertySymbol.IsIndexer;
+                      var indexerParameterSymbols = propertySymbol.Parameters;
+
+                      if (!isIndexer) {
+                        sw.Write(propertySymbol.Name.EscapeKeyword());
+                      } else {
+                        sw.Write("this[");
+                        for (var i = 0;
+                             i < indexerParameterSymbols.Length;
+                             ++i) {
+                          if (i > 0) {
+                            sw.Write(", ");
+                          }
+
+                          var parameterSymbol = indexerParameterSymbols[i];
+                          sw.Write(
+                                typeSymbol
+                                    .GetQualifiedNameAndGenericsFromCurrentSymbol(
+                                        parameterSymbol.Type,
+                                        semanticModel,
+                                        syntax,
+                                        parameterSymbol))
+                            .Write(" ")
+                            .Write(parameterSymbol.Name.EscapeKeyword());
+                        }
+
+                        sw.Write("]");
+                      }
+
+                      sw.WriteLine(" { get; set; }");
                     }
                   }
 
-                  foreach (var (isSelf, _, makeConst, fullyQualifiedParentName, _,
+                  foreach (var (isSelf, _, makeConst, fullyQualifiedParentName,
+                               _,
                                memberSymbol) in
-                           overlapMember.OrderBy(m => m.fullyQualifiedParentName)) {
+                           overlapMember
+                               .OrderBy(m => m.fullyQualifiedParentName)) {
                     if (isSelf) {
                       continue;
                     }
@@ -450,6 +501,7 @@ public class ReadOnlyTypeGenerator
 
             sw.WriteLine(";");
           }
+
           if (!getOnly && propertySymbol.SetMethod != null) {
             sw.Write("set => ")
               .Write(propertyAccessName);
@@ -592,23 +644,48 @@ public class ReadOnlyTypeGenerator
       GetDirectBaseTypeAndInterfaces_(
           INamedTypeSymbol symbol) {
     var baseType = symbol.BaseType;
-    if (baseType != null &&
-        !baseType.IsType<object>() &&
-        !baseType.IsType<ValueType>()) {
-      yield return baseType;
+    if (IsValidParentType_(symbol, baseType)) {
+      yield return baseType!;
     }
 
     var parentInterfaces
         = symbol.Interfaces
-                .Where(i => !(i.IsType(typeof(IEquatable<>)) &&
-                              i.TypeArguments[0]
-                               .GetFullyQualifiedNamespace() ==
-                              symbol.GetFullyQualifiedNamespace() &&
-                              i.TypeArguments[0].Name == symbol.Name));
+                .Where(i => IsValidParentType_(symbol, i));
 
     foreach (var iface in parentInterfaces) {
       yield return iface;
     }
+  }
+
+  private static IEnumerable<INamedTypeSymbol> GetAllParentTypes_(
+      INamedTypeSymbol symbol) {
+    var baseType = symbol.BaseType;
+    if (IsValidParentType_(symbol, baseType)) {
+      yield return baseType!;
+    }
+
+    var parentInterfaces
+        = symbol.AllInterfaces
+                .Where(i => IsValidParentType_(symbol, i));
+    foreach (var iface in parentInterfaces) {
+      yield return iface;
+    }
+  }
+
+  private static bool IsValidParentType_(INamedTypeSymbol symbol,
+                                         INamedTypeSymbol? parentSymbol) {
+    if (parentSymbol == null) {
+      return false;
+    }
+
+    if (parentSymbol.IsType<object>() || parentSymbol.IsType<ValueType>()) {
+      return false;
+    }
+
+    return !(parentSymbol.IsType(typeof(IEquatable<>)) &&
+             parentSymbol.TypeArguments[0].GetFullyQualifiedNamespace() ==
+             symbol.GetFullyQualifiedNamespace() &&
+             parentSymbol.TypeArguments[0].Name == symbol.Name);
   }
 }
 

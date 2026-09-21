@@ -13,7 +13,6 @@ using NUnit.Framework;
 
 using readOnly.analyzer;
 using readOnly.util.asserts;
-using readOnly.util.diagnostics;
 
 #pragma warning disable CS8604
 
